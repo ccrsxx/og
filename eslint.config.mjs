@@ -70,7 +70,6 @@ export default tseslint.config(
         }
       ],
       'import/no-duplicates': ['warn', { 'prefer-inline': true }],
-      'import/consistent-type-specifier-style': ['warn', 'prefer-inline'],
 
       // TypeScript plugin rules
       '@typescript-eslint/consistent-type-imports': 'warn',
