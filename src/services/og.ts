@@ -14,7 +14,7 @@ const validOgQuery = z.object({
   description: validStringSchema.optional().default('')
 });
 
-type ValidOgQuery = z.infer<typeof validOgQuery>;
+export type ValidOgQuery = z.infer<typeof validOgQuery>;
 
 export async function getOg(query: ValidOgQuery): Promise<Buffer> {
   const parsedQuery = validOgQuery.safeParse(query);
