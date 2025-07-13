@@ -8,10 +8,10 @@ import { validStringSchema } from '../lib/validation.ts';
 
 const validOgQuery = z.object({
   type: validStringSchema.optional(),
-  title: validStringSchema.optional(),
+  title: validStringSchema.optional().default(''),
   image: validStringSchema.optional(),
   article: validStringSchema.optional(),
-  description: validStringSchema.optional()
+  description: validStringSchema.optional().default('')
 });
 
 type ValidOgQuery = z.infer<typeof validOgQuery>;
