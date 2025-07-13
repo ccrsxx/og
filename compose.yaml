@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - '${HOST_PORT:-4000}:4000'
+    environment:
+      - PORT=4000
+      - VALID_ORIGINS=${VALID_ORIGINS}
