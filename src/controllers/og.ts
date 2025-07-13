@@ -1,4 +1,4 @@
-import { OgService } from '../services/og.js';
+import { OgService } from '../services/og.ts';
 import type { Request, Response } from 'express';
 
 export async function getOg(

@@ -3,8 +3,8 @@ import satori from 'satori';
 import { z } from 'zod';
 import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
-import { getArrayBufferFromFile } from '../lib/helper.js';
-import { validStringSchema } from '../lib/validation.js';
+import { getArrayBufferFromFile } from '../lib/helper.ts';
+import { validStringSchema } from '../lib/validation.ts';
 
 const validOgQuery = z.object({
   type: validStringSchema.optional(),

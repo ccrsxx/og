@@ -2,4 +2,4 @@
 
 echo "Starting application in production mode..."
 
-exec npm run start:docker
+exec npm run start

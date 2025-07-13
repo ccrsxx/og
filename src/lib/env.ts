@@ -1,9 +1,9 @@
 import { access } from 'fs/promises';
 import dotenv from 'dotenv';
 import { z } from 'zod';
-import { logger } from '../loaders/pino.js';
-import { appConfig } from '../config/index.js';
-import { validStringSchema } from './validation.js';
+import { logger } from '../loaders/pino.ts';
+import { appConfig } from '../config/index.ts';
+import { validStringSchema } from './validation.ts';
 
 const envSchema = z.object({
   PORT: validStringSchema,

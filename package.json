@@ -4,11 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development tsx watch ./src/index.ts",
-    "start": "cross-env NODE_ENV=production node ./build/src/index.js",
-    "start:docker": "cross-env NODE_ENV=production node ./src/index.js",
-    "start:compile": "npm run build && npm run start",
-    "build": "tsc",
+    "dev": "cross-env NODE_ENV=development node --watch ./src/index.ts",
+    "start": "cross-env NODE_ENV=production node ./src/index.ts",
+    "build": "echo 'No build step required for this project'",
     "type-check": "tsc --noEmit",
     "lint": "eslint --max-warnings 0 .",
     "lint:fix": "eslint --fix .",
@@ -33,7 +31,6 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
     "prettier": "3.6.2",
-    "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.36.0"
   },

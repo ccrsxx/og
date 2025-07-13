@@ -1,5 +1,5 @@
 import { Router, type Application } from 'express';
-import { OgController } from '../controllers/og.js';
+import { OgController } from '../controllers/og.ts';
 
 export default (app: Application): void => {
   const router = Router();

@@ -1,5 +1,5 @@
-import og from './og.js';
-import root from './root.js';
+import og from './og.ts';
+import root from './root.ts';
 import type { Application } from 'express';
 
 export default (app: Application): void => {
