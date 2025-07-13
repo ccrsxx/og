@@ -1,5 +1,5 @@
 import { Router, type Application } from 'express';
-import { RootController } from '../controller/root.js';
+import { RootController } from '../controllers/root.js';
 
 export default (app: Application): void => {
   const router = Router();
