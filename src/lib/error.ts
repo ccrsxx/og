@@ -1,19 +1,19 @@
 type HttpErrorOptions = {
   message: string;
-  errors?: Record<string, string>;
+  details?: string[];
 };
 
 export class HttpError extends Error {
   public statusCode: number;
-  public errors?: Record<string, string>;
+  public details: string[];
 
   public constructor(
     statusCode: number,
-    { message, errors }: HttpErrorOptions
+    { message, details = [] }: HttpErrorOptions
   ) {
     super(message);
 
-    this.errors = errors;
+    this.details = details;
     this.statusCode = statusCode;
   }
 }

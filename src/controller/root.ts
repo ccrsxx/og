@@ -1,7 +1,12 @@
 import type { Request, Response } from 'express';
+import type { ApiResponse } from '../lib/types/api.js';
 
-export function ping(_req: Request, res: Response): void {
-  res.status(200).json({ message: 'Ping successfully' });
+export function ping(_req: Request, res: Response<ApiResponse>): void {
+  res.status(200).json({
+    data: {
+      message: 'API is running'
+    }
+  });
 }
 
 export const RootController = {

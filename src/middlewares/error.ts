@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { HttpError } from '../lib/error.js';
 import { logger } from '../loaders/pino.js';
+import type { ApiResponse } from '../lib/types/api.js';
 import type { Request, Response, Application, NextFunction } from 'express';
 
 export default (app: Application): void => {
@@ -19,27 +20,29 @@ function notFound(req: Request, _res: Response, next: NextFunction): void {
 function errorHandler(
   err: Error,
   _req: Request,
-  res: Response,
+  res: Response<ApiResponse>,
   _next: NextFunction
 ): void {
-  const randomId = randomUUID();
+  const errorId = randomUUID();
 
   if (err instanceof HttpError) {
     logger.info(err, `Expected error handler - ${err.message}`);
     res.status(err.statusCode).json({
-      error: { id: randomId, message: err.message, errors: err.errors }
+      error: { id: errorId, message: err.message, details: err.details }
     });
     return;
   }
 
   if (err instanceof Error) {
     logger.error(err, `Unexpected error handler - ${err.message}`);
-    res.status(500).json({ error: { id: randomId, message: err.message } });
+    res
+      .status(500)
+      .json({ error: { id: errorId, message: err.message, details: [] } });
     return;
   }
 
   logger.error(err, 'Unknown error handler');
-  res
-    .status(500)
-    .json({ error: { id: randomId, message: 'Internal server error' } });
+  res.status(500).json({
+    error: { id: errorId, message: 'Internal server error', details: [] }
+  });
 }
