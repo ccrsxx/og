@@ -1,5 +1,5 @@
 # Config
-ARG NODE_IMAGE=node:24-alpine
+ARG NODE_IMAGE=node:24.4.0-alpine
 
 # ---
 
