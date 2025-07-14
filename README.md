@@ -51,24 +51,3 @@ Here are the steps to run the project locally:
 6. Access the API
 
    The API will be available at `http://localhost:4000`.
-
-## Development Workflow
-
-- Run tests (if applicable)
-
-  ```bash
-  npm test
-  ```
-
-- Lint and format code
-
-  ```bash
-  npm run lint
-  npm run format
-  ```
-
-- Build for production
-
-  ```bash
-  npm run build
-  ```
