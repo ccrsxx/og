@@ -72,11 +72,3 @@ Here are the steps to run the project locally:
   ```bash
   npm run build
   ```
-
-## Contributing
-
-Contributions are welcome! If you'd like to contribute, please fork the repository, create a new branch, and submit a pull request with your changes.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
