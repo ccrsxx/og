@@ -5,6 +5,7 @@ import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
 import { getArrayBufferFromFile } from '../lib/helper.ts';
 import { validStringSchema } from '../lib/validation.ts';
+import type { ParsedQs } from 'qs';
 
 const validOgQuery = z.object({
   type: validStringSchema.optional(),
@@ -16,10 +17,9 @@ const validOgQuery = z.object({
 
 export type ValidOgQuery = z.infer<typeof validOgQuery>;
 
-export async function getOg(query: ValidOgQuery): Promise<Buffer> {
-  const parsedQuery = validOgQuery.safeParse(query);
-
-  const { type, title, image, article, description } = parsedQuery.data ?? {};
+export async function getOg(query: ParsedQs): Promise<Buffer> {
+  const { type, title, image, article, description } =
+    validOgQuery.safeParse(query).data ?? {};
 
   const isHomepage = title === 'Risal Amin';
 
