@@ -1,5 +1,8 @@
-# Use alpine as the base image for a lightweight Node.js environment
-FROM node:24.4.0-alpine
+# Set the node version as a build argument
+ARG NODE_VERSION=24.4.0
+
+# Use the specified Node.js version as the base image
+FROM node:${NODE_VERSION}-alpine
 
 # Create and change to the app directory
 WORKDIR /app
