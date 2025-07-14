@@ -1,13 +1,21 @@
 import { OgService } from '../services/og.ts';
+import { appConfig } from '../config/index.ts';
 import type { Request, Response } from 'express';
 
 export async function getOg(
   req: Request,
   res: Response<Buffer>
 ): Promise<void> {
-  const ogBuffer = await OgService.getOg(req.query);
+  const og = await OgService.getOg(req.query);
 
-  res.contentType('image/png').send(ogBuffer);
+  if (appConfig.isProduction) {
+    res.set(
+      'Cache-Control',
+      'public, immutable, no-transform, max-age=31536000'
+    );
+  }
+
+  res.contentType('image/png').send(og);
 }
 
 export const OgController = {
