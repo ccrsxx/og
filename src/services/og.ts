@@ -40,7 +40,7 @@ export async function getOg(query: ParsedQs): Promise<Buffer> {
                 </div>
                 <div tw='flex items-center'>
                   <img
-                    style='objectFit: cover;'
+                    style='object-fit: cover;'
                     tw='h-18 w-18 rounded-full'
                     src='https://risalamin.com/assets/emilia.png'
                     alt='Emilia'
@@ -52,7 +52,7 @@ export async function getOg(query: ParsedQs): Promise<Buffer> {
                 </div>
               </div>
               <img
-                style={{ objectFit: 'cover' }}
+                style='object-fit: cover;'
                 tw='h-full w-[448px] rounded-md'
                 src='${image}'
                 alt='${title}'
@@ -113,8 +113,8 @@ export async function getOg(query: ParsedQs): Promise<Buffer> {
   return pngBuffer;
 }
 
-const gradientTitleStyles = `style="color: transparent; -webkit-background-clip: text; background-clip: text; 
-                             background-image: linear-gradient(to right, #a855f7, #f472b6);"`;
+const gradientTitleStyles = `style='color: transparent; -webkit-background-clip: text; background-clip: text; 
+                             background-image: linear-gradient(to right, #a855f7, #f472b6);'`;
 
 const [interRegular, interMedium, interSemibold] = await Promise.all([
   getArrayBufferFromFile(
