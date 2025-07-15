@@ -9,10 +9,6 @@ Currently, the features include:
 - Open Graph Image Generation: Generates Open Graph images for my projects.
 - Spotify API: Provides access to my Spotify data, like my currently playing track, top tracks, etc.
 
-## REST API
-
-Coming soon.
-
 ## Development
 
 Here are the steps to run the project locally:
@@ -48,7 +44,3 @@ Here are the steps to run the project locally:
    ```bash
    npm run dev
    ```
-
-6. Access the API
-
-   The API will be available at `http://localhost:4000`.
