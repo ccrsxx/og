@@ -6,10 +6,7 @@
     "version": "1.0.0"
   },
   "servers": [
-    {
-      "url": "https://api.risalamin.com",
-      "description": "Production server"
-    },
+    { "url": "https://api.risalamin.com", "description": "Production server" },
     {
       "url": "http://localhost:4000",
       "description": "Local development server"
@@ -27,10 +24,7 @@
             "description": "200 - Get currently playing",
             "headers": {
               "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string",
-                  "example": "true"
-                }
+                "schema": { "type": "string", "example": "true" }
               },
               "CF-RAY": {
                 "schema": {
@@ -39,22 +33,13 @@
                 }
               },
               "Cf-Cache-Status": {
-                "schema": {
-                  "type": "string",
-                  "example": "DYNAMIC"
-                }
+                "schema": { "type": "string", "example": "DYNAMIC" }
               },
               "Connection": {
-                "schema": {
-                  "type": "string",
-                  "example": "keep-alive"
-                }
+                "schema": { "type": "string", "example": "keep-alive" }
               },
               "Content-Encoding": {
-                "schema": {
-                  "type": "string",
-                  "example": "br"
-                }
+                "schema": { "type": "string", "example": "br" }
               },
               "Date": {
                 "schema": {
@@ -81,23 +66,12 @@
                 }
               },
               "Server": {
-                "schema": {
-                  "type": "string",
-                  "example": "cloudflare"
-                }
+                "schema": { "type": "string", "example": "cloudflare" }
               },
               "Transfer-Encoding": {
-                "schema": {
-                  "type": "string",
-                  "example": "chunked"
-                }
+                "schema": { "type": "string", "example": "chunked" }
               },
-              "Vary": {
-                "schema": {
-                  "type": "string",
-                  "example": "Origin"
-                }
-              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
               "X-Cloud-Trace-Context": {
                 "schema": {
                   "type": "string",
@@ -105,10 +79,7 @@
                 }
               },
               "X-Powered-By": {
-                "schema": {
-                  "type": "string",
-                  "example": "Express"
-                }
+                "schema": { "type": "string", "example": "Express" }
               },
               "alt-svc": {
                 "schema": {
@@ -125,10 +96,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "isPlaying": {
-                          "type": "boolean",
-                          "example": true
-                        },
+                        "isPlaying": { "type": "boolean", "example": true },
                         "item": {
                           "type": "object",
                           "properties": {
@@ -181,10 +149,7 @@
             "description": "401 - Invalid token",
             "headers": {
               "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string",
-                  "example": "true"
-                }
+                "schema": { "type": "string", "example": "true" }
               },
               "CF-RAY": {
                 "schema": {
@@ -193,22 +158,13 @@
                 }
               },
               "Cf-Cache-Status": {
-                "schema": {
-                  "type": "string",
-                  "example": "DYNAMIC"
-                }
+                "schema": { "type": "string", "example": "DYNAMIC" }
               },
               "Connection": {
-                "schema": {
-                  "type": "string",
-                  "example": "keep-alive"
-                }
+                "schema": { "type": "string", "example": "keep-alive" }
               },
               "Content-Length": {
-                "schema": {
-                  "type": "string",
-                  "example": "94"
-                }
+                "schema": { "type": "string", "example": "94" }
               },
               "Date": {
                 "schema": {
@@ -235,17 +191,9 @@
                 }
               },
               "Server": {
-                "schema": {
-                  "type": "string",
-                  "example": "cloudflare"
-                }
+                "schema": { "type": "string", "example": "cloudflare" }
               },
-              "Vary": {
-                "schema": {
-                  "type": "string",
-                  "example": "Origin"
-                }
-              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
               "X-Cloud-Trace-Context": {
                 "schema": {
                   "type": "string",
@@ -253,10 +201,7 @@
                 }
               },
               "X-Powered-By": {
-                "schema": {
-                  "type": "string",
-                  "example": "Express"
-                }
+                "schema": { "type": "string", "example": "Express" }
               },
               "alt-svc": {
                 "schema": {
@@ -305,11 +250,7 @@
             }
           }
         },
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ]
+        "security": [{ "bearerAuth": [] }]
       }
     },
     "/og": {
@@ -338,18 +279,12 @@
           {
             "name": "type",
             "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "blog"
-            }
+            "schema": { "type": "string", "example": "blog" }
           },
           {
             "name": "article",
             "in": "query",
-            "schema": {
-              "type": "string",
-              "example": "true"
-            }
+            "schema": { "type": "string", "example": "true" }
           },
           {
             "name": "image",
@@ -360,11 +295,7 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": ""
-          }
-        }
+        "responses": { "200": { "description": "" } }
       }
     },
     "/": {
@@ -378,10 +309,7 @@
             "description": "200 - Ping server",
             "headers": {
               "Access-Control-Allow-Credentials": {
-                "schema": {
-                  "type": "string",
-                  "example": "true"
-                }
+                "schema": { "type": "string", "example": "true" }
               },
               "CF-RAY": {
                 "schema": {
@@ -390,22 +318,13 @@
                 }
               },
               "Cf-Cache-Status": {
-                "schema": {
-                  "type": "string",
-                  "example": "DYNAMIC"
-                }
+                "schema": { "type": "string", "example": "DYNAMIC" }
               },
               "Connection": {
-                "schema": {
-                  "type": "string",
-                  "example": "close"
-                }
+                "schema": { "type": "string", "example": "close" }
               },
               "Content-Encoding": {
-                "schema": {
-                  "type": "string",
-                  "example": "br"
-                }
+                "schema": { "type": "string", "example": "br" }
               },
               "Date": {
                 "schema": {
@@ -432,23 +351,12 @@
                 }
               },
               "Server": {
-                "schema": {
-                  "type": "string",
-                  "example": "cloudflare"
-                }
+                "schema": { "type": "string", "example": "cloudflare" }
               },
               "Transfer-Encoding": {
-                "schema": {
-                  "type": "string",
-                  "example": "chunked"
-                }
+                "schema": { "type": "string", "example": "chunked" }
               },
-              "Vary": {
-                "schema": {
-                  "type": "string",
-                  "example": "Origin"
-                }
-              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
               "X-Cloud-Trace-Context": {
                 "schema": {
                   "type": "string",
@@ -456,10 +364,7 @@
                 }
               },
               "X-Powered-By": {
-                "schema": {
-                  "type": "string",
-                  "example": "Express"
-                }
+                "schema": { "type": "string", "example": "Express" }
               },
               "alt-svc": {
                 "schema": {
@@ -476,9 +381,13 @@
                     "data": {
                       "type": "object",
                       "properties": {
+                        "documentation_url": {
+                          "type": "string",
+                          "example": "/docs"
+                        },
                         "message": {
                           "type": "string",
-                          "example": "API is running"
+                          "example": "Welcome! The API is up and running."
                         }
                       }
                     }
@@ -488,7 +397,8 @@
                   "200 - Ping server": {
                     "value": {
                       "data": {
-                        "message": "API is running"
+                        "documentation_url": "/docs",
+                        "message": "Welcome! The API is up and running."
                       }
                     }
                   }
@@ -501,22 +411,11 @@
     }
   },
   "components": {
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
+    "securitySchemes": { "bearerAuth": { "type": "http", "scheme": "bearer" } }
   },
   "tags": [
-    {
-      "name": "Spotify"
-    },
-    {
-      "name": "Open Graph Image"
-    },
-    {
-      "name": "Misc"
-    }
+    { "name": "Spotify" },
+    { "name": "Open Graph Image" },
+    { "name": "Misc" }
   ]
 }
