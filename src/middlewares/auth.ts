@@ -1,5 +1,5 @@
-import { appEnv } from '../lib/env.ts';
-import { HttpError } from '../lib/error.ts';
+import { appEnv } from '../utils/env.ts';
+import { HttpError } from '../utils/error.ts';
 import { AuthService } from '../services/auth.ts';
 import type { Request, Response, NextFunction } from 'express';
 

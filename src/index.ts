@@ -1,6 +1,6 @@
 import { createServer } from 'http';
 import express from 'express';
-import { appEnv } from './lib/env.ts';
+import { appEnv } from './utils/env.ts';
 import { logger } from './loaders/pino.ts';
 import loaders from './loaders/index.ts';
 import routes from './routes/index.ts';

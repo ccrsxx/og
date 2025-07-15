@@ -1,7 +1,7 @@
 import { SpotifyService } from '../services/spotify.ts';
 import type { Request, Response } from 'express';
-import type { ApiResponse } from '../lib/types/api.ts';
-import type { CurrentlyPlaying } from '../lib/types/spotify/parsed.ts';
+import type { ApiResponse } from '../utils/types/api.ts';
+import type { CurrentlyPlaying } from '../utils/types/spotify/parsed.ts';
 
 export async function getCurrentlyPlaying(
   _req: Request,

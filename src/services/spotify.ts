@@ -1,11 +1,11 @@
-import { appEnv } from '../lib/env.ts';
+import { appEnv } from '../utils/env.ts';
 import { logger } from '../loaders/pino.ts';
-import { HttpError } from '../lib/error.ts';
-import type { CurrentlyPlaying } from '../lib/types/spotify/parsed.ts';
+import { HttpError } from '../utils/error.ts';
+import type { CurrentlyPlaying } from '../utils/types/spotify/parsed.ts';
 import type {
   SpotifyTrack,
   SpotifyCurrentlyPlaying
-} from '../lib/types/spotify/currently-playing.ts';
+} from '../utils/types/spotify/currently-playing.ts';
 
 type AccessToken = {
   scope: string;

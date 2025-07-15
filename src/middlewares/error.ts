@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
-import { HttpError } from '../lib/error.ts';
+import { HttpError } from '../utils/error.ts';
 import { logger } from '../loaders/pino.ts';
-import type { ApiResponse } from '../lib/types/api.ts';
+import type { ApiResponse } from '../utils/types/api.ts';
 import type { Request, Response, Application, NextFunction } from 'express';
 
 export default (app: Application): void => {
