@@ -1,4 +1,5 @@
 name: Deployment
+run-name: Deploy production on ${{ inputs.sha || github.sha }} by ${{ github.actor }}
 
 on:
   push:
@@ -34,7 +35,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.sha || github.sha }}
+          ref: ${{ inputs.sha || github.sha }}
 
       - id: auth
         name: Authenticate to Google Cloud
