@@ -1,4 +1,6 @@
 import { appEnv } from '../lib/env.ts';
+import { logger } from '../loaders/pino.ts';
+import { HttpError } from '../lib/error.ts';
 import type { CurrentlyPlaying } from '../lib/types/spotify/parsed.ts';
 import type {
   SpotifyTrack,
@@ -34,6 +36,17 @@ async function fetchNewAccessToken(): Promise<AccessToken> {
     body: tokenBody
   });
 
+  if (!response.ok) {
+    logger.error(
+      { status: response.status, statusText: response.statusText },
+      'Error while fetching Spotify access token'
+    );
+
+    throw new HttpError(502, {
+      message: 'Failed to fetch Spotify access token'
+    });
+  }
+
   const data = (await response.json()) as AccessToken;
 
   return data;
@@ -60,13 +73,13 @@ async function getAccessToken(): Promise<string> {
   // Add a 60 second buffer to the expiry time to ensure the token is valid
   const bufferExpiryOffset = 60;
 
-  const expiresAt = new Date(
+  const expiredAt = new Date(
     Date.now() + (expires_in - bufferExpiryOffset) * 1000
   );
 
   cachedAccessToken = {
     accessToken: access_token,
-    expiredAt: expiresAt
+    expiredAt: expiredAt
   };
 
   return cachedAccessToken.accessToken;
@@ -87,7 +100,16 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     }
   );
 
-  if (!response.ok) return null;
+  if (!response.ok) {
+    logger.error(
+      { status: response.status, statusText: response.statusText },
+      'Error while fetching currently playing track from Spotify'
+    );
+
+    throw new HttpError(502, {
+      message: 'Failed to fetch currently playing track from Spotify'
+    });
+  }
 
   const data = (await response.json()) as SpotifyCurrentlyPlaying;
 
@@ -114,7 +136,7 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
 
   const artistName = item.artists.map(({ name }) => name).join(', ');
 
-  const nowPlaying: CurrentlyPlaying = {
+  const currentlyPlaying: CurrentlyPlaying = {
     isPlaying: isPlaying,
     item: {
       trackUrl,
@@ -125,7 +147,7 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     }
   };
 
-  return nowPlaying;
+  return currentlyPlaying;
 }
 
 export const SpotifyService = {
