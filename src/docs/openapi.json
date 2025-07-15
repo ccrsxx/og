@@ -387,7 +387,7 @@
                         },
                         "message": {
                           "type": "string",
-                          "example": "Welcome! The APIs is up and running."
+                          "example": "Welcome! The API is up and running."
                         }
                       }
                     }
@@ -398,7 +398,7 @@
                     "value": {
                       "data": {
                         "documentation_url": "/docs",
-                        "message": "Welcome! The APIs is up and running."
+                        "message": "Welcome! The API is up and running."
                       }
                     }
                   }
