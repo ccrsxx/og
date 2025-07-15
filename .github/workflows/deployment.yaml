@@ -1,6 +1,6 @@
 name: Deployment
 
-run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual deploy / {0}', inputs.sha || github.sha) || format('Automatic deploy / {0}', github.event.head_commit.message) }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual Deploy | {0}', inputs.sha || github.sha) || format('Automatic Deploy | {0}', github.event.head_commit.message) }}
 
 on:
   push:
