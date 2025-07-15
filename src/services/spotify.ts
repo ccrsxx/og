@@ -68,17 +68,18 @@ async function getAccessToken(): Promise<string> {
     return cachedAccessToken.accessToken;
   }
 
-  const { access_token, expires_in } = await fetchNewAccessToken();
+  const { access_token: accessToken, expires_in: expiresIn } =
+    await fetchNewAccessToken();
 
   // Add a 60 second buffer to the expiry time to ensure the token is valid
   const bufferExpiryOffset = 60;
 
   const expiredAt = new Date(
-    Date.now() + (expires_in - bufferExpiryOffset) * 1000
+    Date.now() + (expiresIn - bufferExpiryOffset) * 1000
   );
 
   cachedAccessToken = {
-    accessToken: access_token,
+    accessToken: accessToken,
     expiredAt: expiredAt
   };
 
@@ -89,13 +90,13 @@ async function getAccessToken(): Promise<string> {
  * Returns the currently playing song from the Spotify API.
  */
 async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
-  const access_token = await getAccessToken();
+  const accessToken = await getAccessToken();
 
   const response = await fetch(
     'https://api.spotify.com/v1/me/player/currently-playing',
     {
       headers: {
-        Authorization: `Bearer ${access_token}`
+        Authorization: `Bearer ${accessToken}`
       }
     }
   );
