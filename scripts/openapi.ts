@@ -75,6 +75,7 @@ async function main(): Promise<void> {
     execSyncWithOutput(`git diff --quiet --exit-code ${outputPath}`);
 
     console.log('No changes detected in the OpenAPI spec. Nothing to commit.');
+
     return;
   } catch {
     console.log(
