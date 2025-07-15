@@ -1,5 +1,5 @@
 name: Deployment
-run-name: Deploy production on ${{ inputs.sha || github.sha }} by ${{ github.actor }}
+run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual deploy {0}', inputs.sha || github.sha) || null }}
 
 on:
   push:
