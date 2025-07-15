@@ -13,6 +13,9 @@ COPY package*.json .
 # Install dependencies
 RUN npm ci --omit=dev
 
+# Copy public directory
+COPY public public
+
 # Copy the entrypoint script
 COPY entrypoint.sh .
 
