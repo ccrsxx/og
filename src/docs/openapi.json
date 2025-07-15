@@ -1,0 +1,522 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Main APIs",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "servers": [
+    {
+      "url": "https://api.risalamin.com",
+      "description": "Production server"
+    },
+    {
+      "url": "http://localhost:4000",
+      "description": "Local development server"
+    }
+  ],
+  "paths": {
+    "/spotify/currently-playing": {
+      "get": {
+        "tags": ["Spotify"],
+        "summary": "Get currently playing",
+        "description": "Get currently playing",
+        "operationId": "getCurrentlyPlaying",
+        "responses": {
+          "200": {
+            "description": "200 - Get currently playing",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string",
+                  "example": "true"
+                }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb7a5f8be440d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": {
+                  "type": "string",
+                  "example": "DYNAMIC"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Content-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "br"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:56:08 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"199-FhWc+f64DAV5Sda5bOqYSmbWMeE\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=9aePbhRUHqkh8cn9J4614KeB3fosVeExqEgu2ysCEXlXtvhyoaScCQHOCoe3VfrKc7COu%2F%2FkTN2KOqBa6pvYRbU1nvaP9dqpTABY5INM1JDe\"}]}"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "cloudflare"
+                }
+              },
+              "Transfer-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "chunked"
+                }
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Origin"
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "26c235279f06a9c13095b0e9747c5b4d;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isPlaying": {
+                          "type": "boolean",
+                          "example": true
+                        },
+                        "item": {
+                          "type": "object",
+                          "properties": {
+                            "albumImageUrl": {
+                              "type": "string",
+                              "example": "https://i.scdn.co/image/ab67616d0000b273c2426afbb6e4a624e588cd21"
+                            },
+                            "albumName": {
+                              "type": "string",
+                              "example": "初音ミク「マジカルミライ 2021」[Live]"
+                            },
+                            "artistName": {
+                              "type": "string",
+                              "example": "ryo (supercell), Hatsune Miku"
+                            },
+                            "trackName": {
+                              "type": "string",
+                              "example": "ワールドイズマイン-初音ミク「マジカルミライ 2021」Live- (feat. 初音ミク)"
+                            },
+                            "trackUrl": {
+                              "type": "string",
+                              "example": "https://open.spotify.com/track/29rRca4BXxuUCNmcCzHvtl"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "200 - Get currently playing": {
+                    "value": {
+                      "data": {
+                        "isPlaying": true,
+                        "item": {
+                          "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273c2426afbb6e4a624e588cd21",
+                          "albumName": "初音ミク「マジカルミライ 2021」[Live]",
+                          "artistName": "ryo (supercell), Hatsune Miku",
+                          "trackName": "ワールドイズマイン-初音ミク「マジカルミライ 2021」Live- (feat. 初音ミク)",
+                          "trackUrl": "https://open.spotify.com/track/29rRca4BXxuUCNmcCzHvtl"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401 - Invalid token",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string",
+                  "example": "true"
+                }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb79e3bf0a40d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": {
+                  "type": "string",
+                  "example": "DYNAMIC"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "keep-alive"
+                }
+              },
+              "Content-Length": {
+                "schema": {
+                  "type": "string",
+                  "example": "94"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:55:47 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"5e-/VC2Pm+Z/HQceaX/TadZBqXZInk\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=pC06wzVVDzSgIWvUjuu0dZyOODYmRYAAYyrLwm8C3lJNkEZCuUwvLwghP%2FI0xWTJbOL8xqnF%2F6oEbsXxJAvSD6hPkZDoZyZZPLcYnvg9BAeS\"}]}"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "cloudflare"
+                }
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Origin"
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "6e544d066e649407d4118ac0bf839510;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "401 - Invalid token": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e",
+                        "message": "Invalid token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/og": {
+      "get": {
+        "tags": ["Open Graph Image"],
+        "summary": "Get open graph image",
+        "description": "Get open graph image",
+        "operationId": "getOpenGraphImage",
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "Data Fetching in Next.js"
+            }
+          },
+          {
+            "name": "description",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "Learn about the different methods for fetching data in Next.js, including static generation, server-side rendering, and client-side rendering."
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "blog"
+            }
+          },
+          {
+            "name": "article",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "true"
+            }
+          },
+          {
+            "name": "image",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "example": "https://risalamin.com/_next/static/media/banner.4d6606be.jpg"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "tags": ["Misc"],
+        "summary": "Ping server",
+        "description": "Ping server",
+        "operationId": "pingServer",
+        "responses": {
+          "200": {
+            "description": "200 - Ping server",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": {
+                  "type": "string",
+                  "example": "true"
+                }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb6254da23fd63-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": {
+                  "type": "string",
+                  "example": "DYNAMIC"
+                }
+              },
+              "Connection": {
+                "schema": {
+                  "type": "string",
+                  "example": "close"
+                }
+              },
+              "Content-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "br"
+                }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:39:44 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"25-xRq02FWva4DiUm8AOw8+nS+TtZ0\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=dyO1qk4RhxgYVPo1aQXXK%2FP%2B%2BZ%2FlidVoHM54o0xB1TgDbS3oPseVv4wH1ORnqkDbQKBHvUAvou5Hgnxm7weEtU8ZvUshYcrOrBPhb8cNBn7E\"}]}"
+                }
+              },
+              "Server": {
+                "schema": {
+                  "type": "string",
+                  "example": "cloudflare"
+                }
+              },
+              "Transfer-Encoding": {
+                "schema": {
+                  "type": "string",
+                  "example": "chunked"
+                }
+              },
+              "Vary": {
+                "schema": {
+                  "type": "string",
+                  "example": "Origin"
+                }
+              },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "79d5116247f1de1bb370a1e05c08e36d;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": {
+                  "type": "string",
+                  "example": "Express"
+                }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "example": "API is running"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "200 - Ping server": {
+                    "value": {
+                      "data": {
+                        "message": "API is running"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Spotify"
+    },
+    {
+      "name": "Open Graph Image"
+    },
+    {
+      "name": "Misc"
+    }
+  ]
+}
