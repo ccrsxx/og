@@ -2,6 +2,7 @@ import { writeFile } from 'fs/promises';
 import { z } from 'zod';
 import { transpile } from 'postman2openapi';
 import { validStringSchema } from '../src/utils/validation.ts';
+import type { OpenAPIV3 } from 'openapi-types';
 
 async function main(): Promise<void> {
   const postmanEnvSchema = z.object({
@@ -40,11 +41,13 @@ async function main(): Promise<void> {
 
   const data = (await postmanCollectionResponse.json()) as PostmanCollection;
 
-  type OpenApiCollection = {
-    servers: { url: string; description: string }[];
-  };
+  const openapi = transpile(data.collection) as OpenAPIV3.Document;
 
-  const openapi = transpile(data.collection) as OpenApiCollection;
+  openapi.info = {
+    title: 'Main APIs',
+    description: 'API documentation generated from Postman collection',
+    version: '1.0.0'
+  };
 
   openapi.servers = [
     {

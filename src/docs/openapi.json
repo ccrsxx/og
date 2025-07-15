@@ -2,8 +2,8 @@
   "openapi": "3.0.3",
   "info": {
     "title": "Main APIs",
-    "version": "1.0.0",
-    "contact": {}
+    "description": "API documentation generated from Postman collection",
+    "version": "1.0.0"
   },
   "servers": [
     {

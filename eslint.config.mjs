@@ -69,7 +69,7 @@ export default tseslint.config(
           ]
         }
       ],
-      'import/extensions': ['error', 'never', { ts: 'always' }],
+      'import/extensions': ['error', 'never', { ts: 'always', json: 'always' }],
       'import/no-duplicates': ['warn', { 'prefer-inline': true }],
 
       // TypeScript plugin rules
