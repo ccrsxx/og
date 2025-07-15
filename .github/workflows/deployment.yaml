@@ -12,6 +12,7 @@ jobs:
   deploy:
     name: Build and deploy to Cloud Run
     runs-on: ubuntu-latest
+    environment: production
 
     needs: ci
 
