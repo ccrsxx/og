@@ -120,7 +120,6 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
       trackUrl,
       trackName,
       albumName,
-      isPlaying,
       artistName,
       albumImageUrl
     }
