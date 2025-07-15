@@ -13,11 +13,11 @@ COPY package*.json .
 # Install dependencies
 RUN npm ci --omit=dev
 
-# Copy the source code
-COPY src src
-
 # Copy the entrypoint script
 COPY entrypoint.sh .
+
+# Copy the source code
+COPY src src
 
 # Run the web service on container startup
 ENTRYPOINT ["./entrypoint.sh"]
