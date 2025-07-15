@@ -381,7 +381,7 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "documentation_url": {
+                        "documentationUrl": {
                           "type": "string",
                           "example": "/docs"
                         },
@@ -397,7 +397,7 @@
                   "200 - Ping server": {
                     "value": {
                       "data": {
-                        "documentation_url": "/docs",
+                        "documentationUrl": "/docs",
                         "message": "Welcome! The API is up and running."
                       }
                     }
