@@ -7,6 +7,7 @@ My personal API for my projects and services. This API is built with Node.js and
 Currently, the features include:
 
 - Open Graph Image Generation: Generates Open Graph images for my projects.
+- Spotify API: Provides access to my Spotify data, like my currently playing track, top tracks, etc.
 
 ## REST API
 
