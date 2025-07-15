@@ -7,6 +7,7 @@ import { validStringSchema } from './validation.ts';
 
 const envSchema = z.object({
   PORT: validStringSchema,
+  SECRET_KEY: validStringSchema,
   VALID_ORIGINS: validStringSchema,
   SPOTIFY_CLIENT_ID: validStringSchema,
   SPOTIFY_CLIENT_SECRET: validStringSchema,
