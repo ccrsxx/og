@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+
 import { writeFile } from 'fs/promises';
 import { execSync } from 'child_process';
 import { z } from 'zod';
