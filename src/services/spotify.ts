@@ -112,6 +112,15 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     });
   }
 
+  if (response.status === 204) {
+    logger.info('No currently playing track found on Spotify');
+
+    return {
+      isPlaying: false,
+      item: null
+    };
+  }
+
   const data = (await response.json()) as SpotifyCurrentlyPlaying;
 
   // TODO: Support episode type in the future
