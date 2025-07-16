@@ -7,7 +7,8 @@ export default (app: Application): void => {
     '/docs',
     apiReference({
       theme: 'elysiajs',
-      content: openApiDocument
+      content: openApiDocument,
+      pageTitle: 'Main API'
     })
   );
 };
