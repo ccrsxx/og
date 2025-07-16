@@ -1,8 +1,8 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Main APIs",
-    "description": "API documentation generated from Postman collection",
+    "title": "Main API",
+    "description": "Public facing API to manage all my project features",
     "version": "1.0.0"
   },
   "servers": [
@@ -383,11 +383,11 @@
                       "properties": {
                         "documentationUrl": {
                           "type": "string",
-                          "example": "/docs"
+                          "example": "https://api.risalamin.com/docs"
                         },
                         "message": {
                           "type": "string",
-                          "example": "Welcome! The API is up and running."
+                          "example": "Welcome! The API is up and running"
                         }
                       }
                     }
@@ -397,8 +397,8 @@
                   "200 - Ping server": {
                     "value": {
                       "data": {
-                        "documentationUrl": "/docs",
-                        "message": "Welcome! The API is up and running."
+                        "documentationUrl": "https://api.risalamin.com/docs",
+                        "message": "Welcome! The API is up and running"
                       }
                     }
                   }

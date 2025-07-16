@@ -47,8 +47,8 @@ async function main(): Promise<void> {
   const openapi = transpile(data.collection) as OpenAPIV3.Document;
 
   openapi.info = {
-    title: 'Main APIs',
-    description: 'API documentation generated from Postman collection',
+    title: 'Main API',
+    description: 'Public facing API to manage all my project features',
     version: '1.0.0'
   };
 
