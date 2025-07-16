@@ -78,6 +78,7 @@ jobs:
           service: '${{ vars.SERVICE }}'
           env_vars: |
             SECRET_KEY=${{ secrets.SECRET_KEY }}
+            BACKEND_URL=${{ secrets.BACKEND_URL }}
             VALID_ORIGINS=${{ secrets.VALID_ORIGINS }}
             SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}
             SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}
