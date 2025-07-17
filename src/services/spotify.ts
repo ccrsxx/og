@@ -142,8 +142,8 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
 
   const artistName = item.artists.map(({ name }) => name).join(', ');
 
-  const startTimestamp = data.progress_ms ?? 0;
-  const endTimestamp = data.item?.duration_ms ?? 0;
+  const progressMs = data.progress_ms ?? 0;
+  const durationMs = data.item?.duration_ms ?? 0;
 
   const currentlyPlaying: CurrentlyPlaying = {
     isPlaying: isPlaying,
@@ -152,11 +152,9 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
       trackName,
       albumName,
       artistName,
-      albumImageUrl,
-      timestamps: {
-        start: startTimestamp,
-        end: endTimestamp
-      }
+      progressMs,
+      durationMs,
+      albumImageUrl
     }
   };
 
