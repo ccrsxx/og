@@ -261,15 +261,22 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
-    "/spotify/currently-playing/stream": {
+    "/spotify/currently-playing/sse": {
       "get": {
         "tags": ["Spotify"],
-        "summary": "Get currently playing stream",
-        "description": "Get currently playing stream",
-        "operationId": "getCurrentlyPlayingStream",
+        "summary": "Get currently playing sse",
+        "description": "Get currently playing sse",
+        "operationId": "getCurrentlyPlayingSse",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "schema": { "type": "string", "example": "{{secret_key}}" }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "200 - Get currently playing steam",
+            "description": "200 - Get currently playing sse",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -297,7 +304,7 @@
             "content": {
               "text/plain": {
                 "examples": {
-                  "200 - Get currently playing steam": {
+                  "200 - Get currently playing sse": {
                     "value": "data: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":91830,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":92813,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":93827,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":94841,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":95843,\"end\":182029}}}}\n\n"
                   }
                 }
