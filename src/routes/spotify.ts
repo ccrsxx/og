@@ -1,6 +1,6 @@
 import { Router, type Application } from 'express';
-import { SpotifyController } from '../controllers/spotify.ts';
 import { AuthMiddleware } from '../middlewares/auth.ts';
+import { SpotifyController } from '../controllers/spotify.ts';
 
 export default (app: Application): void => {
   const router = Router();
@@ -14,8 +14,8 @@ export default (app: Application): void => {
   );
 
   router.get(
-    '/currently-playing/stream',
-    AuthMiddleware.isAuthorized,
-    SpotifyController.getCurrentlyPlayingStream
+    '/currently-playing/sse',
+    AuthMiddleware.isAuthorizedFromQuery,
+    SpotifyController.getCurrentlyPlayingSSE
   );
 };

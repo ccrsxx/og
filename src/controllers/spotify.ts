@@ -15,7 +15,7 @@ async function getCurrentlyPlaying(
   });
 }
 
-function getCurrentlyPlayingStream(_req: Request, res: Response): void {
+function getCurrentlyPlayingSSE(_req: Request, res: Response): void {
   res.writeHead(200, {
     Connection: 'keep-alive',
     'Content-Type': 'text/event-stream',
@@ -55,5 +55,5 @@ function getCurrentlyPlayingStream(_req: Request, res: Response): void {
 
 export const SpotifyController = {
   getCurrentlyPlaying,
-  getCurrentlyPlayingStream
+  getCurrentlyPlayingSSE
 };

@@ -15,6 +15,23 @@ function isAuthorized(req: Request, _res: Response, next: NextFunction): void {
   next();
 }
 
+function isAuthorizedFromQuery(
+  req: Request,
+  _res: Response,
+  next: NextFunction
+): void {
+  const token = AuthService.getAuthorizationBearerTokenFromQuery(req);
+
+  const validSecretKey = appEnv.SECRET_KEY === token;
+
+  if (!validSecretKey) {
+    throw new HttpError(401, { message: 'Invalid token' });
+  }
+
+  next();
+}
+
 export const AuthMiddleware = {
-  isAuthorized
+  isAuthorized,
+  isAuthorizedFromQuery
 };

@@ -18,6 +18,17 @@ function getAuthorizationBearerToken(req: Request): string {
   return token;
 }
 
+function getAuthorizationBearerTokenFromQuery(req: Request): string {
+  const token = req.query.token as string;
+
+  if (!token) {
+    throw new HttpError(401, { message: 'Invalid token' });
+  }
+
+  return token;
+}
+
 export const AuthService = {
-  getAuthorizationBearerToken
+  getAuthorizationBearerToken,
+  getAuthorizationBearerTokenFromQuery
 };
