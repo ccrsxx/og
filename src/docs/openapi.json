@@ -21,71 +21,29 @@
         "operationId": "getCurrentlyPlaying",
         "responses": {
           "200": {
-            "description": "200 - Get currently playing",
+            "description": "200 - Get currently playing / 200 - Get currently playing steam",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
               },
-              "CF-RAY": {
-                "schema": {
-                  "type": "string",
-                  "example": "95fb7a5f8be440d8-SIN"
-                }
-              },
-              "Cf-Cache-Status": {
-                "schema": { "type": "string", "example": "DYNAMIC" }
+              "Cache-Control": {
+                "schema": { "type": "string", "example": "no-cache" }
               },
               "Connection": {
                 "schema": { "type": "string", "example": "keep-alive" }
               },
-              "Content-Encoding": {
-                "schema": { "type": "string", "example": "br" }
-              },
               "Date": {
                 "schema": {
                   "type": "string",
-                  "example": "Tue, 15 Jul 2025 18:56:08 GMT"
+                  "example": "Thu, 17 Jul 2025 12:54:07 GMT"
                 }
-              },
-              "Etag": {
-                "schema": {
-                  "type": "string",
-                  "example": "W/\"199-FhWc+f64DAV5Sda5bOqYSmbWMeE\""
-                }
-              },
-              "Nel": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
-                }
-              },
-              "Report-To": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=9aePbhRUHqkh8cn9J4614KeB3fosVeExqEgu2ysCEXlXtvhyoaScCQHOCoe3VfrKc7COu%2F%2FkTN2KOqBa6pvYRbU1nvaP9dqpTABY5INM1JDe\"}]}"
-                }
-              },
-              "Server": {
-                "schema": { "type": "string", "example": "cloudflare" }
               },
               "Transfer-Encoding": {
                 "schema": { "type": "string", "example": "chunked" }
               },
               "Vary": { "schema": { "type": "string", "example": "Origin" } },
-              "X-Cloud-Trace-Context": {
-                "schema": {
-                  "type": "string",
-                  "example": "26c235279f06a9c13095b0e9747c5b4d;o=1"
-                }
-              },
               "X-Powered-By": {
                 "schema": { "type": "string", "example": "Express" }
-              },
-              "alt-svc": {
-                "schema": {
-                  "type": "string",
-                  "example": "h3=\":443\"; ma=86400"
-                }
               }
             },
             "content": {
@@ -102,23 +60,30 @@
                           "properties": {
                             "albumImageUrl": {
                               "type": "string",
-                              "example": "https://i.scdn.co/image/ab67616d0000b273c2426afbb6e4a624e588cd21"
+                              "example": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda"
                             },
                             "albumName": {
                               "type": "string",
-                              "example": "初音ミク「マジカルミライ 2021」[Live]"
+                              "example": "恋風"
                             },
                             "artistName": {
                               "type": "string",
-                              "example": "ryo (supercell), Hatsune Miku"
+                              "example": "Lilas"
+                            },
+                            "timestamps": {
+                              "type": "object",
+                              "properties": {
+                                "end": { "type": "number", "example": 182029 },
+                                "start": { "type": "number", "example": 53870 }
+                              }
                             },
                             "trackName": {
                               "type": "string",
-                              "example": "ワールドイズマイン-初音ミク「マジカルミライ 2021」Live- (feat. 初音ミク)"
+                              "example": "恋風"
                             },
                             "trackUrl": {
                               "type": "string",
-                              "example": "https://open.spotify.com/track/29rRca4BXxuUCNmcCzHvtl"
+                              "example": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
                             }
                           }
                         }
@@ -132,11 +97,12 @@
                       "data": {
                         "isPlaying": true,
                         "item": {
-                          "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273c2426afbb6e4a624e588cd21",
-                          "albumName": "初音ミク「マジカルミライ 2021」[Live]",
-                          "artistName": "ryo (supercell), Hatsune Miku",
-                          "trackName": "ワールドイズマイン-初音ミク「マジカルミライ 2021」Live- (feat. 初音ミク)",
-                          "trackUrl": "https://open.spotify.com/track/29rRca4BXxuUCNmcCzHvtl"
+                          "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda",
+                          "albumName": "恋風",
+                          "artistName": "Lilas",
+                          "timestamps": { "end": 182029, "start": 53870 },
+                          "trackName": "恋風",
+                          "trackUrl": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
                         }
                       }
                     }
@@ -146,7 +112,7 @@
             }
           },
           "401": {
-            "description": "401 - Invalid token",
+            "description": "401 - Invalid token / 401 - Invalid token",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
