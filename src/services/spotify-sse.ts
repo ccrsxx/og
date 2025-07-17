@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import { SpotifyService } from '../services/spotify.ts';
 import { logger } from '../loaders/pino.ts';
 import type { Request, Response } from 'express';
@@ -60,8 +61,8 @@ function handleConnection(_req: Request, res: Response): void {
   });
 
   const SSEClient: SSEClient = {
-    id: crypto.randomUUID(),
-    res
+    id: randomUUID(),
+    res: res
   };
 
   SSEStates.clients.push(SSEClient);
