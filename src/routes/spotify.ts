@@ -12,4 +12,10 @@ export default (app: Application): void => {
     AuthMiddleware.isAuthorized,
     SpotifyController.getCurrentlyPlaying
   );
+
+  router.get(
+    '/currently-playing/stream',
+    AuthMiddleware.isAuthorized,
+    SpotifyController.getCurrentlyPlayingStream
+  );
 };

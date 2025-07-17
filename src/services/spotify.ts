@@ -1,11 +1,7 @@
 import { appEnv } from '../utils/env.ts';
 import { logger } from '../loaders/pino.ts';
 import { HttpError } from '../utils/error.ts';
-import type { CurrentlyPlaying } from '../utils/types/spotify/parsed.ts';
-import type {
-  SpotifyTrack,
-  SpotifyCurrentlyPlaying
-} from '../utils/types/spotify/currently-playing.ts';
+import type { CurrentlyPlaying } from '../utils/types/spotify.ts';
 
 type AccessToken = {
   scope: string;
@@ -121,7 +117,7 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     };
   }
 
-  const data = (await response.json()) as SpotifyCurrentlyPlaying;
+  const data = (await response.json()) as SpotifyApi.CurrentlyPlayingResponse;
 
   // TODO: Support episode type in the future
   const isTrackType = data.item?.type === 'track';
@@ -133,7 +129,7 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     };
   }
 
-  const item = data.item as SpotifyTrack;
+  const item = data.item as SpotifyApi.TrackObjectFull;
   const isPlaying = data.is_playing;
 
   const trackName = item.name;
@@ -146,6 +142,9 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
 
   const artistName = item.artists.map(({ name }) => name).join(', ');
 
+  const startTimestamp = data.progress_ms ?? 0;
+  const endTimestamp = data.item?.duration_ms ?? 0;
+
   const currentlyPlaying: CurrentlyPlaying = {
     isPlaying: isPlaying,
     item: {
@@ -153,7 +152,11 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
       trackName,
       albumName,
       artistName,
-      albumImageUrl
+      albumImageUrl,
+      timestamps: {
+        start: startTimestamp,
+        end: endTimestamp
+      }
     }
   };
 

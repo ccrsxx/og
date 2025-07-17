@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["spotify-api"],
     "target": "esnext",
     "module": "nodenext",
     "strict": true,

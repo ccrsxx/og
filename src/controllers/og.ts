@@ -2,10 +2,7 @@ import { OgService } from '../services/og.ts';
 import { appConfig } from '../config/index.ts';
 import type { Request, Response } from 'express';
 
-export async function getOg(
-  req: Request,
-  res: Response<Buffer>
-): Promise<void> {
+async function getOg(req: Request, res: Response<Buffer>): Promise<void> {
   const og = await OgService.getOg(req.query);
 
   if (appConfig.isProduction) {

@@ -3,7 +3,13 @@ export type Track = {
   trackName: string;
   albumName: string;
   artistName: string;
+  timestamps: TrackTimestamps;
   albumImageUrl: string | null;
+};
+
+export type TrackTimestamps = {
+  start: number;
+  end: number;
 };
 
 export type CurrentlyPlaying = {
