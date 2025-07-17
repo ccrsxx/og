@@ -32,7 +32,7 @@ async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
 
     // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
     if (SSEClient) {
-      logger.info('Broadcasting first event to new client.');
+      logger.debug('Broadcasting first event to new client.');
       SSEClient.res.write(eventString);
     } else {
       if (!SSEStates.clients.length) {
@@ -40,7 +40,9 @@ async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
         return;
       }
 
-      logger.info(`Broadcasting event to ${SSEStates.clients.length} clients.`);
+      logger.debug(
+        `Broadcasting event to ${SSEStates.clients.length} clients.`
+      );
 
       SSEStates.clients.forEach((client) => client.res.write(eventString));
     }
