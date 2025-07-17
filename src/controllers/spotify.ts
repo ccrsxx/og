@@ -16,6 +16,9 @@ async function getCurrentlyPlaying(
 }
 
 function getCurrentlyPlayingSSE(_req: Request, res: Response): void {
+  // Interval for refreshing the currently playing track
+  const SSE_INTERVAL = 1000;
+
   res.writeHead(200, {
     Connection: 'keep-alive',
     'Content-Type': 'text/event-stream',
@@ -45,7 +48,10 @@ function getCurrentlyPlayingSSE(_req: Request, res: Response): void {
 
   void handleSendServerSentEvent();
 
-  const intervalId = setInterval(() => void handleSendServerSentEvent(), 3000);
+  const intervalId = setInterval(
+    () => void handleSendServerSentEvent(),
+    SSE_INTERVAL
+  );
 
   res.on('close', () => {
     clearInterval(intervalId);
