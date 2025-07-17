@@ -21,29 +21,71 @@
         "operationId": "getCurrentlyPlaying",
         "responses": {
           "200": {
-            "description": "200 - Get currently playing / 200 - Get currently playing steam",
+            "description": "200 - Get currently playing",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
               },
-              "Cache-Control": {
-                "schema": { "type": "string", "example": "no-cache" }
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb7a5f8be440d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": { "type": "string", "example": "DYNAMIC" }
               },
               "Connection": {
                 "schema": { "type": "string", "example": "keep-alive" }
               },
+              "Content-Encoding": {
+                "schema": { "type": "string", "example": "br" }
+              },
               "Date": {
                 "schema": {
                   "type": "string",
-                  "example": "Thu, 17 Jul 2025 12:54:07 GMT"
+                  "example": "Tue, 15 Jul 2025 18:56:08 GMT"
                 }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"199-FhWc+f64DAV5Sda5bOqYSmbWMeE\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=9aePbhRUHqkh8cn9J4614KeB3fosVeExqEgu2ysCEXlXtvhyoaScCQHOCoe3VfrKc7COu%2F%2FkTN2KOqBa6pvYRbU1nvaP9dqpTABY5INM1JDe\"}]}"
+                }
+              },
+              "Server": {
+                "schema": { "type": "string", "example": "cloudflare" }
               },
               "Transfer-Encoding": {
                 "schema": { "type": "string", "example": "chunked" }
               },
               "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "26c235279f06a9c13095b0e9747c5b4d;o=1"
+                }
+              },
               "X-Powered-By": {
                 "schema": { "type": "string", "example": "Express" }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
               }
             },
             "content": {
@@ -112,7 +154,158 @@
             }
           },
           "401": {
-            "description": "401 - Invalid token / 401 - Invalid token",
+            "description": "401 - Invalid token",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb79e3bf0a40d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": { "type": "string", "example": "DYNAMIC" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "94" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:55:47 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"5e-/VC2Pm+Z/HQceaX/TadZBqXZInk\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=pC06wzVVDzSgIWvUjuu0dZyOODYmRYAAYyrLwm8C3lJNkEZCuUwvLwghP%2FI0xWTJbOL8xqnF%2F6oEbsXxJAvSD6hPkZDoZyZZPLcYnvg9BAeS\"}]}"
+                }
+              },
+              "Server": {
+                "schema": { "type": "string", "example": "cloudflare" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "6e544d066e649407d4118ac0bf839510;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "401 - Invalid token": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e",
+                        "message": "Invalid token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
+    "/spotify/currently-playing/stream": {
+      "get": {
+        "tags": ["Spotify"],
+        "summary": "Get currently playing stream",
+        "description": "Get currently playing stream",
+        "operationId": "getCurrentlyPlayingStream",
+        "responses": {
+          "200": {
+            "description": "200 - Get currently playing steam",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Cache-Control": {
+                "schema": { "type": "string", "example": "no-cache" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Thu, 17 Jul 2025 12:54:07 GMT"
+                }
+              },
+              "Transfer-Encoding": {
+                "schema": { "type": "string", "example": "chunked" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "text/plain": {
+                "examples": {
+                  "200 - Get currently playing steam": {
+                    "value": "data: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":91830,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":92813,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":93827,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":94841,\"end\":182029}}}}\n\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK\",\"trackName\":\"恋風\",\"albumName\":\"恋風\",\"artistName\":\"Lilas\",\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda\",\"timestamps\":{\"start\":95843,\"end\":182029}}}}\n\n"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401 - Invalid token",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
