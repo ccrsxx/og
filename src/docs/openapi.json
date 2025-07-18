@@ -416,6 +416,172 @@
                 }
               }
             }
+          },
+          "429": {
+            "description": "429 - Maximum number of clients for your IP reached",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "144" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 18 Jul 2025 17:12:49 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"90-Yy7oBrX6Utz/Kd11gtO26lRva5k\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "98" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "57" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "1af1395d-f785-4a0b-b12d-281a7483a531"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Maximum number of clients for your IP reached. Try again later."
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "429 - Maximum number of clients for your IP reached": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "1af1395d-f785-4a0b-b12d-281a7483a531",
+                        "message": "Maximum number of clients for your IP reached. Try again later."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "503 - Maximum number of clients reached",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "132" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Fri, 18 Jul 2025 17:11:51 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"84-qWWEwPW7bsXHdpYzq+tAPnPu+7Y\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "98" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "55" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "bb5ee099-248d-4d83-842c-374a793651a4"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Maximum number of clients reached. Try again later."
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "503 - Maximum number of clients reached": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "bb5ee099-248d-4d83-842c-374a793651a4",
+                        "message": "Maximum number of clients reached. Try again later."
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "security": [{ "bearerAuth": [] }]
