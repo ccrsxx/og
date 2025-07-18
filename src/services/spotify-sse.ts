@@ -65,8 +65,6 @@ function handleConnection(req: Request, res: Response): void {
     'Cache-Control': 'no-cache'
   });
 
-  res.flushHeaders();
-
   const SSEClient: SSEClient = {
     id: randomUUID(),
     ip: getIpAddressFromRequest(req),

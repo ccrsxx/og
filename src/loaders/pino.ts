@@ -21,6 +21,7 @@ const developmentLoggerOptions: CombinedLoggerOptions = {
 
 const productionLoggerOptions: CombinedLoggerOptions = {
   pinoOptions: {
+    level: 'trace',
     formatters: {
       level(label) {
         return { severity: label };
