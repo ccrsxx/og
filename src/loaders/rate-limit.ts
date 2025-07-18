@@ -52,6 +52,7 @@ const globalRateLimit = rateLimit({
 });
 
 export default (app: Application): void => {
+  // Trust the first two proxies. First is Google Cloud and second is Cloudflare.
   app.set('trust proxy', 2);
 
   app.use(globalRateLimit);
