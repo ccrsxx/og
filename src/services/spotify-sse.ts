@@ -16,12 +16,12 @@ type SSEState = {
   pollingIntervalId: NodeJS.Timeout | null;
 };
 
-const SSEStates: SSEState = {
+export const SSEStates: SSEState = {
   clients: [],
   pollingIntervalId: null
 };
 
-const SSE_INTERVAL = 1000; // 1 seconds
+const SSE_INTERVAL_MS = 1000;
 
 async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
   try {
@@ -65,6 +65,8 @@ function handleConnection(req: Request, res: Response): void {
     'Cache-Control': 'no-cache'
   });
 
+  res.flushHeaders();
+
   const SSEClient: SSEClient = {
     id: randomUUID(),
     ip: getIpAddressFromRequest(req),
@@ -88,8 +90,11 @@ function handleConnection(req: Request, res: Response): void {
   if (!SSEStates.pollingIntervalId) {
     logger.info('First client connected. Starting polling interval.');
 
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    SSEStates.pollingIntervalId = setInterval(pollAndBroadcast, SSE_INTERVAL);
+    SSEStates.pollingIntervalId = setInterval(
+      // eslint-disable-next-line @typescript-eslint/no-misused-promises
+      pollAndBroadcast,
+      SSE_INTERVAL_MS
+    );
   }
 
   res.on('close', () => {
