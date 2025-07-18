@@ -266,9 +266,9 @@
     "/spotify/currently-playing/sse": {
       "get": {
         "tags": ["Spotify"],
-        "summary": "Get currently playing sse",
+        "summary": "Get currently playing with sse",
         "description": "Get currently playing track on Spotify with Server Sent Events",
-        "operationId": "getCurrentlyPlayingSse",
+        "operationId": "getCurrentlyPlayingWithSse",
         "parameters": [
           {
             "name": "token",
@@ -278,7 +278,7 @@
         ],
         "responses": {
           "200": {
-            "description": "200 - Get currently playing sse",
+            "description": "200 - Get currently playing with sse",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -306,7 +306,7 @@
             "content": {
               "text/plain": {
                 "examples": {
-                  "200 - Get currently playing sse": {
+                  "200 - Get currently playing with sse": {
                     "value": "data: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/15WwIDmvJi1f4CRdduBbrr\",\"trackName\":\"hikari\",\"albumName\":\"hikari\",\"artistName\":\"KID FRESINO\",\"progressMs\":9041,\"durationMs\":189357,\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b2731bb835e4cce0def345933d30\"}}}\n"
                   }
                 }
