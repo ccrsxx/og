@@ -1,7 +1,7 @@
 import cors from './cors.ts';
 import pino from './pino.ts';
 import json from './json.ts';
-import rateLimit from './rate-limit.ts';
+import rateLimit from './rate-limit/index.ts';
 import type { Application } from 'express';
 import type { Server } from 'http';
 
