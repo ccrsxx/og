@@ -7,8 +7,6 @@ import routes from './routes/index.ts';
 import errorHandler from './middlewares/error.ts';
 
 function main(): void {
-  process.exit(1);
-
   const app = express();
   const server = createServer(app);
 

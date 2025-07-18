@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { SpotifyService } from '../services/spotify.ts';
+// import { SpotifyService } from '../services/spotify.ts';
 import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { Request, Response } from 'express';
@@ -21,42 +21,42 @@ export const SSEStates: SSEState = {
   pollingIntervalId: null
 };
 
-const SSE_INTERVAL_MS = 1000;
+// const SSE_INTERVAL_MS = 1000;
 
-async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
-  try {
-    const currentlyPlaying = await SpotifyService.getCurrentlyPlaying();
+// async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
+//   try {
+//     const currentlyPlaying = await SpotifyService.getCurrentlyPlaying();
 
-    const jsonString = JSON.stringify({
-      data: currentlyPlaying
-    });
+//     const jsonString = JSON.stringify({
+//       data: currentlyPlaying
+//     });
 
-    const eventString = `data: ${jsonString}\n\n`;
+//     const eventString = `data: ${jsonString}\n\n`;
 
-    // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
-    if (SSEClient) {
-      logger.debug('Broadcasting first event to new client.');
-      SSEClient.res.write(eventString);
-    } else {
-      if (!SSEStates.clients.length) {
-        logger.info('No clients connected. Skipping broadcast.');
-        return;
-      }
+//     // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
+//     if (SSEClient) {
+//       logger.debug('Broadcasting first event to new client.');
+//       SSEClient.res.write(eventString);
+//     } else {
+//       if (!SSEStates.clients.length) {
+//         logger.info('No clients connected. Skipping broadcast.');
+//         return;
+//       }
 
-      logger.debug(
-        `Broadcasting event to ${SSEStates.clients.length} clients.`
-      );
+//       logger.debug(
+//         `Broadcasting event to ${SSEStates.clients.length} clients.`
+//       );
 
-      SSEStates.clients.forEach((client) => client.res.write(eventString));
-    }
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-    logger.error(
-      err,
-      `Error during Spotify poll and broadcast: ${errorMessage}`
-    );
-  }
-}
+//       SSEStates.clients.forEach((client) => client.res.write(eventString));
+//     }
+//   } catch (err) {
+//     const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+//     logger.error(
+//       err,
+//       `Error during Spotify poll and broadcast: ${errorMessage}`
+//     );
+//   }
+// }
 
 function handleConnection(req: Request, res: Response): void {
   res.writeHead(200, {
@@ -83,16 +83,16 @@ function handleConnection(req: Request, res: Response): void {
   );
 
   // If this new client, we send send thh first event immediately.
-  void pollAndBroadcast(SSEClient);
+  // void pollAndBroadcast(SSEClient);
 
   if (!SSEStates.pollingIntervalId) {
     logger.info('First client connected. Starting polling interval.');
 
-    SSEStates.pollingIntervalId = setInterval(
-      // eslint-disable-next-line @typescript-eslint/no-misused-promises
-      pollAndBroadcast,
-      SSE_INTERVAL_MS
-    );
+    // SSEStates.pollingIntervalId = setInterval(
+    //   // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    //   pollAndBroadcast,
+    //   SSE_INTERVAL_MS
+    // );
   }
 
   res.on('close', () => {
