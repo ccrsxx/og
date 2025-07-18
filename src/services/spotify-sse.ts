@@ -1,10 +1,12 @@
 import { randomUUID } from 'crypto';
 import { SpotifyService } from '../services/spotify.ts';
 import { logger } from '../loaders/pino.ts';
+import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { Request, Response } from 'express';
 
 type SSEClient = {
   id: string;
+  ip: string;
   res: Response;
 };
 
@@ -55,7 +57,7 @@ async function pollAndBroadcast(SSEClient?: SSEClient): Promise<void> {
   }
 }
 
-function handleConnection(_req: Request, res: Response): void {
+function handleConnection(req: Request, res: Response): void {
   res.writeHead(200, {
     Connection: 'keep-alive',
     'Content-Type': 'text/event-stream',
@@ -64,13 +66,19 @@ function handleConnection(_req: Request, res: Response): void {
 
   const SSEClient: SSEClient = {
     id: randomUUID(),
+    ip: getIpAddressFromRequest(req),
     res: res
   };
 
   SSEStates.clients.push(SSEClient);
 
+  const clientsContext = {
+    clients: SSEStates.clients
+  };
+
   logger.info(
-    `Client connected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
+    `Client connected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`,
+    clientsContext
   );
 
   // If this new client, we send send thh first event immediately.
@@ -89,7 +97,8 @@ function handleConnection(_req: Request, res: Response): void {
     );
 
     logger.info(
-      `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
+      `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`,
+      clientsContext
     );
 
     // If there are no more clients connected, stop the polling interval.

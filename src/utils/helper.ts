@@ -1,4 +1,5 @@
 import { readFile } from 'fs/promises';
+import { type Request } from 'express';
 
 export async function getArrayBufferFromFile(
   path: string
@@ -11,4 +12,8 @@ export async function getArrayBufferFromFile(
   ) as ArrayBuffer;
 
   return arrayBuffer;
+}
+
+export function getIpAddressFromRequest(req: Request): string {
+  return req.ip ?? 'Unknown IP';
 }

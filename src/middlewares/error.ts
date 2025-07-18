@@ -1,6 +1,7 @@
 import { randomUUID } from 'crypto';
 import { HttpError } from '../utils/error.ts';
 import { logger } from '../loaders/pino.ts';
+import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { ApiResponse } from '../utils/types/api.ts';
 import type { Request, Response, Application, NextFunction } from 'express';
 
@@ -38,7 +39,7 @@ function errorHandler(
   };
 
   const logContext: LogContext = {
-    ip: req.ip ?? 'Unknown IP',
+    ip: getIpAddressFromRequest(req),
     url: req.originalUrl,
     error: err,
     method: req.method,
@@ -50,8 +51,8 @@ function errorHandler(
   if (err instanceof HttpError) {
     if (err.statusCode === 429) {
       logger.warn(
-        logContext,
-        `Handled rate limit error from ${req.ip} on ${req.originalUrl}`
+        `Handled rate limit error from ${req.ip} on ${req.originalUrl}`,
+        logContext
       );
     } else {
       logger.info(logContext, `Handled expected error - ${err.message}`);
@@ -64,7 +65,7 @@ function errorHandler(
   }
 
   if (err instanceof Error) {
-    logger.error(logContext, `Handled unexpected error - ${err.message}`);
+    logger.error(`Handled unexpected error - ${err.message}`, logContext);
     res.status(500).json({
       error: {
         id: errorId,
@@ -75,7 +76,7 @@ function errorHandler(
     return;
   }
 
-  logger.error(logContext, 'Handled unknown error');
+  logger.error('Handled unknown error', logContext);
   res.status(500).json({
     error: {
       id: errorId,
