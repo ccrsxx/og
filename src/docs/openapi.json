@@ -1,9 +1,10 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "title": "Main API",
+    "title": "Main APIs",
     "description": "Public facing API to manage all my project features",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "contact": {}
   },
   "servers": [
     { "url": "https://api.risalamin.com", "description": "Production server" },
@@ -266,9 +267,9 @@
     "/spotify/currently-playing/sse": {
       "get": {
         "tags": ["Spotify"],
-        "summary": "Get currently playing with sse",
+        "summary": "Get currently playing sse",
         "description": "Get currently playing track on Spotify with Server Sent Events",
-        "operationId": "getCurrentlyPlayingWithSse",
+        "operationId": "getCurrentlyPlayingSse",
         "parameters": [
           {
             "name": "token",
@@ -278,7 +279,7 @@
         ],
         "responses": {
           "200": {
-            "description": "200 - Get currently playing with sse",
+            "description": "200 - Get currently playing sse",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -306,7 +307,7 @@
             "content": {
               "text/plain": {
                 "examples": {
-                  "200 - Get currently playing with sse": {
+                  "200 - Get currently playing sse": {
                     "value": "data: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/15WwIDmvJi1f4CRdduBbrr\",\"trackName\":\"hikari\",\"albumName\":\"hikari\",\"artistName\":\"KID FRESINO\",\"progressMs\":9041,\"durationMs\":189357,\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b2731bb835e4cce0def345933d30\"}}}\n"
                   }
                 }
@@ -591,7 +592,7 @@
       "get": {
         "tags": ["Open Graph Image"],
         "summary": "Get open graph image",
-        "description": "Get opengraph image with query parameters",
+        "description": "Get open graph image",
         "operationId": "getOpenGraphImage",
         "parameters": [
           {
