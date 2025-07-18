@@ -10,9 +10,7 @@ const commonRateLimitOptions = {
   legacyHeaders: false, // Disable the deprecated `X-RateLimit-*` headers
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers (RFC 6585)
   handler: (req, _res, next) => {
-    logger.warn(
-      `Rate limit exceeded for ${req.method} on ${req.originalUrl} from ${req.ip}`
-    );
+    logger.warn(`Rate limit exceeded from ${req.ip} on ${req.originalUrl}`);
 
     const rateLimitError = new HttpError(429, {
       message: 'Too many requests, please try again later.'
