@@ -3,6 +3,7 @@ import { SpotifyService } from '../services/spotify.ts';
 import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { Request, Response } from 'express';
+import type { ApiLogContext } from '../utils/types/log.ts';
 
 type SSEClient = {
   id: string;
@@ -72,8 +73,12 @@ function handleConnection(req: Request, res: Response): void {
 
   SSEStates.clients.push(SSEClient);
 
+  const SSEStatesLogContext: ApiLogContext<SSEState> = {
+    context: SSEStates
+  };
+
   logger.info(
-    SSEStates,
+    SSEStatesLogContext,
     `Client connected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
   );
 
@@ -93,7 +98,7 @@ function handleConnection(req: Request, res: Response): void {
     );
 
     logger.info(
-      SSEStates,
+      SSEStatesLogContext,
       `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
     );
 

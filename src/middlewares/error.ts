@@ -4,6 +4,7 @@ import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { ApiResponse } from '../utils/types/api.ts';
 import type { Request, Response, Application, NextFunction } from 'express';
+import type { ApiLogContext } from '../utils/types/log.ts';
 
 export default (app: Application): void => {
   app.use(notFoundHandler);
@@ -38,12 +39,14 @@ function errorHandler(
     errorId: string;
   };
 
-  const logContext: LogContext = {
-    ip: getIpAddressFromRequest(req),
-    url: req.originalUrl,
-    error: err,
-    method: req.method,
-    errorId: errorId
+  const logContext: ApiLogContext<LogContext> = {
+    context: {
+      ip: getIpAddressFromRequest(req),
+      url: req.originalUrl,
+      error: err,
+      method: req.method,
+      errorId: errorId
+    }
   };
 
   logger.debug(logContext, 'Error handler invoked');
