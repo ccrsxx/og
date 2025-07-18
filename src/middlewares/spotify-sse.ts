@@ -44,6 +44,6 @@ function isConnectionAuthorized(
   next();
 }
 
-export const SpotifyMiddleware = {
+export const SpotifySSEMiddleware = {
   isConnectionAuthorized
 };
