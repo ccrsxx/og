@@ -8,6 +8,8 @@ import { validStringSchema } from '../src/utils/validation.ts';
 import type { OpenAPIV3 } from 'openapi-types';
 
 async function main(): Promise<void> {
+  console.log('Generating OpenAPI documentation...');
+
   const postmanEnvSchema = z.object({
     BACKEND_URL: validStringSchema,
     POSTMAN_API_KEY: validStringSchema,
@@ -70,6 +72,17 @@ async function main(): Promise<void> {
   await writeFile(outputPath, stringifiedOpenapi);
 
   execSyncWithOutput(`npx prettier --write ${outputPath}`);
+
+  console.log('OpenAPI documentation generated successfully.');
+
+  const skipCommit = process.argv.includes('--no-commit');
+
+  if (skipCommit) {
+    console.log(
+      'Skipping commit due to --no-commit flag. Please commit manually.'
+    );
+    return;
+  }
 
   try {
     execSyncWithOutput(`git diff --quiet --exit-code ${outputPath}`);

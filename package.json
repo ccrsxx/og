@@ -12,7 +12,8 @@
     "lint:fix": "eslint --fix .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "openapi:generate": "dotenv -e .env.local -- node ./scripts/openapi.ts",
+    "openapi:generate": "dotenv -e .env.local -- node ./scripts/openapi.ts --no-commit",
+    "openapi:generate:commit": "dotenv -e .env.local -- node ./scripts/openapi.ts",
     "prepare": "husky || true"
   },
   "keywords": [],
