@@ -49,9 +49,12 @@ function errorHandler(
 
   if (err instanceof HttpError) {
     if (err.statusCode === 429) {
-      logger.warn(logContext, 'Handled rate limit error');
+      logger.warn(
+        logContext,
+        `Handled rate limit error from ${req.ip} on ${req.originalUrl}`
+      );
     } else {
-      logger.info(logContext, 'Handled client error');
+      logger.info(logContext, `Handled expected error - ${err.message}`);
     }
 
     res.status(err.statusCode).json({
@@ -61,7 +64,7 @@ function errorHandler(
   }
 
   if (err instanceof Error) {
-    logger.error(logContext, 'Handled unexpected server error');
+    logger.error(logContext, `Handled unexpected error - ${err.message}`);
     res.status(500).json({
       error: {
         id: errorId,

@@ -48,7 +48,7 @@ export const commonRateLimitOptions = {
 const globalRateLimit = rateLimit({
   ...commonRateLimitOptions,
   windowMs: 60 * 1000, // 1 minute
-  max: 5 // Limit each IP to 100 requests per `windowMs`.
+  max: 100 // Limit each IP to 100 requests per `windowMs`.
 });
 
 export default (app: Application): void => {
