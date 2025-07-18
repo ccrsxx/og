@@ -48,12 +48,6 @@ async function main(): Promise<void> {
 
   const openapi = transpile(data.collection) as OpenAPIV3.Document;
 
-  openapi.info = {
-    title: 'Main API',
-    description: 'Public facing API to manage all my project features',
-    version: '1.0.0'
-  };
-
   openapi.servers = [
     {
       url: postmanEnv.BACKEND_URL,
