@@ -72,13 +72,9 @@ function handleConnection(req: Request, res: Response): void {
 
   SSEStates.clients.push(SSEClient);
 
-  const clientsContext = {
-    clients: SSEStates.clients
-  };
-
   logger.info(
-    `Client connected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`,
-    clientsContext
+    SSEStates,
+    `Client connected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
   );
 
   // If this new client, we send send thh first event immediately.
@@ -97,8 +93,8 @@ function handleConnection(req: Request, res: Response): void {
     );
 
     logger.info(
-      `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`,
-      clientsContext
+      SSEStates,
+      `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
     );
 
     // If there are no more clients connected, stop the polling interval.

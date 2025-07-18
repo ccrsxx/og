@@ -51,8 +51,8 @@ function errorHandler(
   if (err instanceof HttpError) {
     if (err.statusCode === 429) {
       logger.warn(
-        `Handled rate limit error from ${req.ip} on ${req.originalUrl}`,
-        logContext
+        logContext,
+        `Handled rate limit error from ${req.ip} on ${req.originalUrl}`
       );
     } else {
       logger.info(logContext, `Handled expected error - ${err.message}`);
@@ -65,7 +65,7 @@ function errorHandler(
   }
 
   if (err instanceof Error) {
-    logger.error(`Handled unexpected error - ${err.message}`, logContext);
+    logger.error(logContext, `Handled unexpected error - ${err.message}`);
     res.status(500).json({
       error: {
         id: errorId,
@@ -76,7 +76,7 @@ function errorHandler(
     return;
   }
 
-  logger.error('Handled unknown error', logContext);
+  logger.error(logContext, 'Handled unknown error');
   res.status(500).json({
     error: {
       id: errorId,
