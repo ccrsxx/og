@@ -5,11 +5,15 @@ import type { ApiResponse } from '../utils/types/api.ts';
 import type { Request, Response, Application, NextFunction } from 'express';
 
 export default (app: Application): void => {
-  app.use(notFound);
+  app.use(notFoundHandler);
   app.use(errorHandler);
 };
 
-function notFound(req: Request, _res: Response, next: NextFunction): void {
+function notFoundHandler(
+  req: Request,
+  _res: Response,
+  next: NextFunction
+): void {
   const notFoundError = new HttpError(404, {
     message: `Route not found - ${req.originalUrl}`
   });
@@ -19,14 +23,37 @@ function notFound(req: Request, _res: Response, next: NextFunction): void {
 
 function errorHandler(
   err: Error,
-  _req: Request,
+  req: Request,
   res: Response<ApiResponse>,
   _next: NextFunction
 ): void {
   const errorId = randomUUID();
 
+  type LogContext = {
+    ip: string;
+    url: string;
+    error: Error;
+    method: string;
+    errorId: string;
+  };
+
+  const logContext: LogContext = {
+    ip: req.ip ?? 'Unknown IP',
+    url: req.originalUrl,
+    error: err,
+    method: req.method,
+    errorId: errorId
+  };
+
+  logger.debug(logContext, 'Error handler invoked');
+
   if (err instanceof HttpError) {
-    logger.info(err, `Expected error handler - ${err.message}`);
+    if (err.statusCode === 429) {
+      logger.warn(logContext, 'Handled rate limit error');
+    } else {
+      logger.info(logContext, 'Handled client error');
+    }
+
     res.status(err.statusCode).json({
       error: { id: errorId, message: err.message, details: err.details }
     });
@@ -34,15 +61,23 @@ function errorHandler(
   }
 
   if (err instanceof Error) {
-    logger.error(err, `Unexpected error handler - ${err.message}`);
-    res
-      .status(500)
-      .json({ error: { id: errorId, message: err.message, details: [] } });
+    logger.error(logContext, 'Handled unexpected server error');
+    res.status(500).json({
+      error: {
+        id: errorId,
+        message: 'An internal server error occurred.',
+        details: []
+      }
+    });
     return;
   }
 
-  logger.error(err, 'Unknown error handler');
+  logger.error(logContext, 'Handled unknown error');
   res.status(500).json({
-    error: { id: errorId, message: 'Internal server error', details: [] }
+    error: {
+      id: errorId,
+      message: 'An internal server error occurred.',
+      details: []
+    }
   });
 }
