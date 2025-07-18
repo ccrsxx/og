@@ -3,13 +3,6 @@ import { type Application } from 'express';
 import { HttpError } from '../utils/error.ts';
 
 /**
- * @file This file configures the application's rate-limiting strategy.
- * It uses a layered defense approach:
- * 1. Cloudflare at the edge handles massive, short-burst DDoS attacks.
- * 2. This server-side limiter handles sustained, application-level abuse.
- */
-
-/**
  * * --- EDGE LAYER: CLOUDFLARE ---
  * Cloudflare acts as the first line of defense at the network edge.
  * Its primary role is to absorb and block high-volume, short-burst attacks
@@ -23,7 +16,7 @@ import { HttpError } from '../utils/error.ts';
  * Common rate-limit options to be reused across different limiters.
  * This promotes consistency and adheres to modern standards.
  */
-export const commonRateLimitOptions = {
+const commonRateLimitOptions = {
   standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers (RFC 6585)
   legacyHeaders: false, // Disable the deprecated `X-RateLimit-*` headers
   handler: (_req, _res, next) => {
@@ -35,6 +28,15 @@ export const commonRateLimitOptions = {
   }
 } as const satisfies Partial<Options>;
 
+export function createRateLimit(
+  options: Parameters<typeof rateLimit>[0]
+): ReturnType<typeof rateLimit> {
+  return rateLimit({
+    ...commonRateLimitOptions,
+    ...options
+  });
+}
+
 /**
  * * --- APPLICATION LAYER: GLOBAL SERVER-SIDE LIMIT ---
  * This is the second layer of protection, enforced directly on our server.
@@ -45,8 +47,7 @@ export const commonRateLimitOptions = {
  * limit is stricter for sustained traffic (100 req/min), protecting application
  * resources like database connections.
  */
-const globalRateLimit = rateLimit({
-  ...commonRateLimitOptions,
+const globalRateLimit = createRateLimit({
   windowMs: 60 * 1000, // 1 minute
   max: 100 // Limit each IP to 100 requests per `windowMs`.
 });
