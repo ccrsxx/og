@@ -1,5 +1,6 @@
 import { logger } from '../loaders/pino.ts';
 import { kv } from './kv.ts';
+import { getRemainingSecondsFromDate } from './helper.ts';
 
 type CacheClient = {
   get<T>(key: string): Promise<CacheItem<T> | null>;
@@ -76,8 +77,9 @@ export async function getCachedData<T>({
   const cachedValue = await cacheClient.get<T>(key);
 
   if (cachedValue) {
-    const cacheExpirySeconds =
-      (cachedValue.expiredAt.getTime() - Date.now()) / 1000;
+    const cacheExpirySeconds = getRemainingSecondsFromDate(
+      cachedValue.expiredAt
+    );
 
     logger.debug(
       `Cache hit for key: ${key}. Data will expire in: ${cacheExpirySeconds} seconds`

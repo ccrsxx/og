@@ -1,17 +1,8 @@
-import { readFile } from 'fs/promises';
 import { type Request } from 'express';
 
-export async function getArrayBufferFromFile(
-  path: string
-): Promise<ArrayBuffer> {
-  const file = await readFile(path);
-
-  const arrayBuffer = file.buffer.slice(
-    file.byteOffset,
-    file.byteOffset + file.byteLength
-  ) as ArrayBuffer;
-
-  return arrayBuffer;
+export function getRemainingSecondsFromDate(date: Date): number {
+  const now = new Date();
+  return Math.max(0, Math.floor((date.getTime() - now.getTime()) / 1000));
 }
 
 export function getIpAddressFromRequest(req: Request): string {
