@@ -4,7 +4,7 @@ import { appEnv } from './env.ts';
 import { HttpError, FatalError } from './error.ts';
 
 const cloudflareKVSchema = z.object({
-  'app:state:kill-switch': z.boolean()
+  'api:state:kill-switch': z.boolean()
 });
 
 type CloudflareKVSchema = z.infer<typeof cloudflareKVSchema>;
