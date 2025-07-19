@@ -1,6 +1,7 @@
 import { appEnv } from '../utils/env.ts';
 import { logger } from '../loaders/pino.ts';
 import { HttpError } from '../utils/error.ts';
+import { getCachedData } from '../utils/cache.ts';
 import type { CurrentlyPlaying } from '../utils/types/spotify.ts';
 
 type AccessToken = {
@@ -48,38 +49,22 @@ async function fetchNewAccessToken(): Promise<AccessToken> {
   return data;
 }
 
-type CachedAccessToken = {
-  accessToken: string;
-  expiredAt: Date;
-};
-
-let cachedAccessToken: CachedAccessToken | null = null;
-
 /**
  * Returns the access token from the Spotify API, caching it for subsequent calls.
  * If the cached token is still valid, it will return that instead of fetching a new one.
  */
 async function getAccessToken(): Promise<string> {
-  if (cachedAccessToken && cachedAccessToken.expiredAt > new Date()) {
-    return cachedAccessToken.accessToken;
-  }
-
-  const { access_token: accessToken, expires_in: expiresIn } =
-    await fetchNewAccessToken();
-
-  // Add a 60 second buffer to the expiry time to ensure the token is valid
+  // Add a 60 second buffer to the expiry time to ensure the token is valid when used.
   const bufferExpiryOffset = 60;
 
-  const expiredAt = new Date(
-    Date.now() + (expiresIn - bufferExpiryOffset) * 1000
-  );
+  const tokenData = await getCachedData({
+    key: 'api:spotify:access_token',
+    provider: 'memory',
+    fetcher: fetchNewAccessToken,
+    expiryInSeconds: (data) => data.expires_in - bufferExpiryOffset
+  });
 
-  cachedAccessToken = {
-    accessToken: accessToken,
-    expiredAt: expiredAt
-  };
-
-  return cachedAccessToken.accessToken;
+  return tokenData.access_token;
 }
 
 /**
