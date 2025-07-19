@@ -11,8 +11,12 @@ const envSchema = z.object({
   BACKEND_URL: validStringSchema,
   VALID_ORIGINS: validStringSchema,
   SPOTIFY_CLIENT_ID: validStringSchema,
+  CLOUDFLARE_CDN_URL: validStringSchema,
+  CLOUDFLARE_KV_TOKEN: validStringSchema,
   SPOTIFY_CLIENT_SECRET: validStringSchema,
-  SPOTIFY_REFRESH_TOKEN: validStringSchema
+  SPOTIFY_REFRESH_TOKEN: validStringSchema,
+  CLOUDFLARE_ACCOUNT_ID: validStringSchema,
+  CLOUDFLARE_KV_NAMESPACE_ID: validStringSchema
 });
 
 type EnvSchema = z.infer<typeof envSchema>;
