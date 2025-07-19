@@ -4,8 +4,8 @@ import { SSEStates } from '../services/spotify-sse.ts';
 import { HttpError } from '../utils/error.ts';
 import type { NextFunction, Request, Response } from 'express';
 
-const MAX_GLOBAL_CLIENTS = 200;
-const MAX_CLIENTS_PER_IP = 20;
+const MAX_GLOBAL_CLIENTS = 100;
+const MAX_CLIENTS_PER_IP = 10;
 
 function isConnectionAuthorized(
   req: Request,
