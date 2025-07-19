@@ -1,16 +1,17 @@
-import { join } from 'path';
 import satori from 'satori';
 import { z } from 'zod';
 import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
-import { getArrayBufferFromFile } from '../utils/helper.ts';
+import { appEnv } from '../utils/env.ts';
 import { validStringSchema } from '../utils/validation.ts';
 import type { ParsedQs } from 'qs';
+
+const emiliaImageUrl = `${appEnv.CLOUDFLARE_CDN_URL}/assets/emilia.png`;
 
 const validOgQuery = z.object({
   type: validStringSchema.optional(),
   title: validStringSchema.optional().default(''),
-  image: validStringSchema.optional(),
+  image: validStringSchema.optional().default(emiliaImageUrl),
   article: validStringSchema.optional(),
   description: validStringSchema.optional().default('')
 });
@@ -42,7 +43,7 @@ async function getOg(query: ParsedQs): Promise<Buffer> {
                   <img
                     style='object-fit: cover;'
                     tw='h-18 w-18 rounded-full'
-                    src='https://risalamin.com/assets/emilia.png'
+                    src='${emiliaImageUrl}'
                     alt='Emilia'
                   />
                   <div tw='ml-4 flex flex-col'>
@@ -117,14 +118,14 @@ const gradientTitleStyles = `style='color: transparent; -webkit-background-clip:
                              background-image: linear-gradient(to right, #a855f7, #f472b6);'`;
 
 const [interRegular, interMedium, interSemibold] = await Promise.all([
-  getArrayBufferFromFile(
-    join(import.meta.dirname, '../assets/inter-regular.ttf')
+  fetch(`${appEnv.CLOUDFLARE_CDN_URL}/assets/inter-regular.ttf`).then((res) =>
+    res.arrayBuffer()
   ),
-  getArrayBufferFromFile(
-    join(import.meta.dirname, '../assets/inter-medium.ttf')
+  fetch(`${appEnv.CLOUDFLARE_CDN_URL}/assets/inter-medium.ttf`).then((res) =>
+    res.arrayBuffer()
   ),
-  getArrayBufferFromFile(
-    join(import.meta.dirname, '../assets/inter-semibold.ttf')
+  fetch(`${appEnv.CLOUDFLARE_CDN_URL}/assets/inter-semibold.ttf`).then((res) =>
+    res.arrayBuffer()
   )
 ]);
 

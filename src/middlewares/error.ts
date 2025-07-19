@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { HttpError } from '../utils/error.ts';
+import { HttpError, FatalError } from '../utils/error.ts';
 import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { ApiResponse } from '../utils/types/api.ts';
@@ -50,6 +50,12 @@ function errorHandler(
   };
 
   logger.debug(logContext, 'Error handler invoked');
+
+  if (err instanceof FatalError) {
+    logger.fatal(logContext, `Handled fatal error - ${err.message}`);
+
+    process.exit(1);
+  }
 
   if (err instanceof HttpError) {
     logger.info(logContext, `Handled expected error - ${err.message}`);

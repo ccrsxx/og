@@ -17,3 +17,9 @@ export class HttpError extends Error {
     this.statusCode = statusCode;
   }
 }
+
+export class FatalError extends Error {
+  public constructor(message: string) {
+    super(message);
+  }
+}
