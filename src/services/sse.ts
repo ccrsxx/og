@@ -1,9 +1,9 @@
 import { randomUUID } from 'crypto';
-import { SpotifyService } from '../services/spotify.ts';
 import { logger } from '../loaders/pino.ts';
 import { FatalError } from '../utils/error.ts';
 import { enforceKillSwitch } from '../utils/kill-switch.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
+import { SpotifyService } from './spotify.ts';
 import type { NextFunction, Request, Response } from 'express';
 import type { ApiLogContext } from '../utils/types/log.ts';
 
@@ -167,6 +167,6 @@ function handleClientClose(res: Response, sseClient: SSEClient): void {
   res.end();
 }
 
-export const SpotifySSEService = {
+export const SSEService = {
   handleConnection
 };

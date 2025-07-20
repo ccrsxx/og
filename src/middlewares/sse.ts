@@ -1,6 +1,6 @@
 import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
-import { SSEStates } from '../services/spotify-sse.ts';
+import { SSEStates } from '../services/sse.ts';
 import { HttpError } from '../utils/error.ts';
 import type { NextFunction, Request, Response } from 'express';
 
@@ -44,6 +44,6 @@ function isConnectionAuthorized(
   next();
 }
 
-export const SpotifySSEMiddleware = {
+export const SSEMiddleware = {
   isConnectionAuthorized
 };

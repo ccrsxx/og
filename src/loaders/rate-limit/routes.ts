@@ -16,13 +16,13 @@ const og = createRateLimit({
   max: 60
 });
 
-const spotifyCurrentlyPlayingSSE = createRateLimit({
+const sse = createRateLimit({
   windowMs: TEN_SECONDS_MS,
   max: 10
 });
 
 export const RateLimitRoute = {
   og,
-  global,
-  spotifyCurrentlyPlayingSSE
+  sse,
+  global
 };
