@@ -155,13 +155,13 @@ async function pollAndBroadcast(
 }
 
 function handleClientClose(res: Response, sseClient: SSEClient): void {
+  SSEStates.clients = SSEStates.clients.filter(
+    (client) => client.id !== sseClient.id
+  );
+
   logger.info(
     SSEStatesLogContext,
     `Client disconnected. Total clients: ${SSEStates.clients.length}`
-  );
-
-  SSEStates.clients = SSEStates.clients.filter(
-    (client) => client.id !== sseClient.id
   );
 
   res.end();
