@@ -14,15 +14,15 @@
     }
   ],
   "paths": {
-    "/spotify/currently-playing": {
+    "/": {
       "get": {
-        "tags": ["Spotify"],
-        "summary": "Get currently playing",
-        "description": "Get currently playing track on Spotify",
-        "operationId": "getCurrentlyPlaying",
+        "tags": ["General"],
+        "summary": "Ping server",
+        "description": "Ping server",
+        "operationId": "pingServer",
         "responses": {
           "200": {
-            "description": "200 - Get currently playing",
+            "description": "200 - Ping server",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -30,14 +30,14 @@
               "CF-RAY": {
                 "schema": {
                   "type": "string",
-                  "example": "95fb7a5f8be440d8-SIN"
+                  "example": "95fb6254da23fd63-SIN"
                 }
               },
               "Cf-Cache-Status": {
                 "schema": { "type": "string", "example": "DYNAMIC" }
               },
               "Connection": {
-                "schema": { "type": "string", "example": "keep-alive" }
+                "schema": { "type": "string", "example": "close" }
               },
               "Content-Encoding": {
                 "schema": { "type": "string", "example": "br" }
@@ -45,13 +45,13 @@
               "Date": {
                 "schema": {
                   "type": "string",
-                  "example": "Tue, 15 Jul 2025 18:56:08 GMT"
+                  "example": "Tue, 15 Jul 2025 18:39:44 GMT"
                 }
               },
               "Etag": {
                 "schema": {
                   "type": "string",
-                  "example": "W/\"199-FhWc+f64DAV5Sda5bOqYSmbWMeE\""
+                  "example": "W/\"25-xRq02FWva4DiUm8AOw8+nS+TtZ0\""
                 }
               },
               "Nel": {
@@ -63,7 +63,7 @@
               "Report-To": {
                 "schema": {
                   "type": "string",
-                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=9aePbhRUHqkh8cn9J4614KeB3fosVeExqEgu2ysCEXlXtvhyoaScCQHOCoe3VfrKc7COu%2F%2FkTN2KOqBa6pvYRbU1nvaP9dqpTABY5INM1JDe\"}]}"
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=dyO1qk4RhxgYVPo1aQXXK%2FP%2B%2BZ%2FlidVoHM54o0xB1TgDbS3oPseVv4wH1ORnqkDbQKBHvUAvou5Hgnxm7weEtU8ZvUshYcrOrBPhb8cNBn7E\"}]}"
                 }
               },
               "Server": {
@@ -76,7 +76,7 @@
               "X-Cloud-Trace-Context": {
                 "schema": {
                   "type": "string",
-                  "example": "26c235279f06a9c13095b0e9747c5b4d;o=1"
+                  "example": "79d5116247f1de1bb370a1e05c08e36d;o=1"
                 }
               },
               "X-Powered-By": {
@@ -97,162 +97,24 @@
                     "data": {
                       "type": "object",
                       "properties": {
-                        "isPlaying": { "type": "boolean", "example": true },
-                        "item": {
-                          "type": "object",
-                          "properties": {
-                            "albumImageUrl": {
-                              "type": "string",
-                              "example": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda"
-                            },
-                            "albumName": {
-                              "type": "string",
-                              "example": "恋風"
-                            },
-                            "artistName": {
-                              "type": "string",
-                              "example": "Lilas"
-                            },
-                            "durationMs": {
-                              "type": "number",
-                              "example": 182029
-                            },
-                            "progressMs": {
-                              "type": "number",
-                              "example": 25882
-                            },
-                            "trackName": {
-                              "type": "string",
-                              "example": "恋風"
-                            },
-                            "trackUrl": {
-                              "type": "string",
-                              "example": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "200 - Get currently playing": {
-                    "value": {
-                      "data": {
-                        "isPlaying": true,
-                        "item": {
-                          "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda",
-                          "albumName": "恋風",
-                          "artistName": "Lilas",
-                          "durationMs": 182029,
-                          "progressMs": 25882,
-                          "trackName": "恋風",
-                          "trackUrl": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "401 - Invalid token",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "schema": { "type": "string", "example": "true" }
-              },
-              "CF-RAY": {
-                "schema": {
-                  "type": "string",
-                  "example": "95fb79e3bf0a40d8-SIN"
-                }
-              },
-              "Cf-Cache-Status": {
-                "schema": { "type": "string", "example": "DYNAMIC" }
-              },
-              "Connection": {
-                "schema": { "type": "string", "example": "keep-alive" }
-              },
-              "Content-Length": {
-                "schema": { "type": "string", "example": "94" }
-              },
-              "Date": {
-                "schema": {
-                  "type": "string",
-                  "example": "Tue, 15 Jul 2025 18:55:47 GMT"
-                }
-              },
-              "Etag": {
-                "schema": {
-                  "type": "string",
-                  "example": "W/\"5e-/VC2Pm+Z/HQceaX/TadZBqXZInk\""
-                }
-              },
-              "Nel": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
-                }
-              },
-              "Report-To": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=pC06wzVVDzSgIWvUjuu0dZyOODYmRYAAYyrLwm8C3lJNkEZCuUwvLwghP%2FI0xWTJbOL8xqnF%2F6oEbsXxJAvSD6hPkZDoZyZZPLcYnvg9BAeS\"}]}"
-                }
-              },
-              "Server": {
-                "schema": { "type": "string", "example": "cloudflare" }
-              },
-              "Vary": { "schema": { "type": "string", "example": "Origin" } },
-              "X-Cloud-Trace-Context": {
-                "schema": {
-                  "type": "string",
-                  "example": "6e544d066e649407d4118ac0bf839510;o=1"
-                }
-              },
-              "X-Powered-By": {
-                "schema": { "type": "string", "example": "Express" }
-              },
-              "alt-svc": {
-                "schema": {
-                  "type": "string",
-                  "example": "h3=\":443\"; ma=86400"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "details": {
-                          "type": "array",
-                          "items": {},
-                          "example": []
-                        },
-                        "id": {
+                        "documentationUrl": {
                           "type": "string",
-                          "example": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e"
+                          "example": "https://api.risalamin.com/docs"
                         },
                         "message": {
                           "type": "string",
-                          "example": "Invalid token"
+                          "example": "Welcome! The API is up and running"
                         }
                       }
                     }
                   }
                 },
                 "examples": {
-                  "401 - Invalid token": {
+                  "200 - Ping server": {
                     "value": {
-                      "error": {
-                        "details": [],
-                        "id": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e",
-                        "message": "Invalid token"
+                      "data": {
+                        "documentationUrl": "https://api.risalamin.com/docs",
+                        "message": "Welcome! The API is up and running"
                       }
                     }
                   }
@@ -260,16 +122,15 @@
               }
             }
           }
-        },
-        "security": [{ "bearerAuth": [] }]
+        }
       }
     },
-    "/spotify/currently-playing/sse": {
+    "/sse": {
       "get": {
-        "tags": ["Spotify"],
-        "summary": "Get currently playing sse",
+        "tags": ["General"],
+        "summary": "Get sse events",
         "description": "Get currently playing track on Spotify with Server Sent Events",
-        "operationId": "getCurrentlyPlayingSse",
+        "operationId": "getSseEvents",
         "parameters": [
           {
             "name": "token",
@@ -279,7 +140,7 @@
         ],
         "responses": {
           "200": {
-            "description": "200 - Get currently playing sse",
+            "description": "200 - Get sse events",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -293,8 +154,20 @@
               "Date": {
                 "schema": {
                   "type": "string",
-                  "example": "Thu, 17 Jul 2025 12:54:07 GMT"
+                  "example": "Sun, 20 Jul 2025 01:34:03 GMT"
                 }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "10" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "10;w=10" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "9" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "10" }
               },
               "Transfer-Encoding": {
                 "schema": { "type": "string", "example": "chunked" }
@@ -307,8 +180,8 @@
             "content": {
               "text/plain": {
                 "examples": {
-                  "200 - Get currently playing sse": {
-                    "value": "data: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/15WwIDmvJi1f4CRdduBbrr\",\"trackName\":\"hikari\",\"albumName\":\"hikari\",\"artistName\":\"KID FRESINO\",\"progressMs\":9041,\"durationMs\":189357,\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b2731bb835e4cce0def345933d30\"}}}\n"
+                  "200 - Get sse events": {
+                    "value": "data: {\"data\":{\"message\":\"Connection established. Waiting for updates...\"}}\n\nevent: spotify\ndata: {\"data\":{\"isPlaying\":true,\"item\":{\"trackUrl\":\"https://open.spotify.com/track/1rteFRVH1opcZCYLO6qwZx\",\"trackName\":\"花のように\",\"albumName\":\"アルストロメリア\",\"artistName\":\"Anna\",\"progressMs\":114639,\"durationMs\":250186,\"albumImageUrl\":\"https://i.scdn.co/image/ab67616d0000b2738f1ff2420518ea5bcf51c22a\"}}}\n"
                   }
                 }
               }
@@ -588,6 +461,256 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
+    "/spotify/currently-playing": {
+      "get": {
+        "tags": ["Spotify"],
+        "summary": "Get currently playing",
+        "description": "Get currently playing track on Spotify",
+        "operationId": "getCurrentlyPlaying",
+        "responses": {
+          "200": {
+            "description": "200 - Get currently playing",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb7a5f8be440d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": { "type": "string", "example": "DYNAMIC" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Encoding": {
+                "schema": { "type": "string", "example": "br" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:56:08 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"199-FhWc+f64DAV5Sda5bOqYSmbWMeE\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=9aePbhRUHqkh8cn9J4614KeB3fosVeExqEgu2ysCEXlXtvhyoaScCQHOCoe3VfrKc7COu%2F%2FkTN2KOqBa6pvYRbU1nvaP9dqpTABY5INM1JDe\"}]}"
+                }
+              },
+              "Server": {
+                "schema": { "type": "string", "example": "cloudflare" }
+              },
+              "Transfer-Encoding": {
+                "schema": { "type": "string", "example": "chunked" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "26c235279f06a9c13095b0e9747c5b4d;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "isPlaying": { "type": "boolean", "example": true },
+                        "item": {
+                          "type": "object",
+                          "properties": {
+                            "albumImageUrl": {
+                              "type": "string",
+                              "example": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda"
+                            },
+                            "albumName": {
+                              "type": "string",
+                              "example": "恋風"
+                            },
+                            "artistName": {
+                              "type": "string",
+                              "example": "Lilas"
+                            },
+                            "durationMs": {
+                              "type": "number",
+                              "example": 182029
+                            },
+                            "progressMs": {
+                              "type": "number",
+                              "example": 25882
+                            },
+                            "trackName": {
+                              "type": "string",
+                              "example": "恋風"
+                            },
+                            "trackUrl": {
+                              "type": "string",
+                              "example": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "200 - Get currently playing": {
+                    "value": {
+                      "data": {
+                        "isPlaying": true,
+                        "item": {
+                          "albumImageUrl": "https://i.scdn.co/image/ab67616d0000b273d1a9be7be47701c762ed0dda",
+                          "albumName": "恋風",
+                          "artistName": "Lilas",
+                          "durationMs": 182029,
+                          "progressMs": 25882,
+                          "trackName": "恋風",
+                          "trackUrl": "https://open.spotify.com/track/6QGuDk8tY8Lan39gTWtXWK"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "401 - Invalid token",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "CF-RAY": {
+                "schema": {
+                  "type": "string",
+                  "example": "95fb79e3bf0a40d8-SIN"
+                }
+              },
+              "Cf-Cache-Status": {
+                "schema": { "type": "string", "example": "DYNAMIC" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "94" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Tue, 15 Jul 2025 18:55:47 GMT"
+                }
+              },
+              "Etag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"5e-/VC2Pm+Z/HQceaX/TadZBqXZInk\""
+                }
+              },
+              "Nel": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
+                }
+              },
+              "Report-To": {
+                "schema": {
+                  "type": "string",
+                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=pC06wzVVDzSgIWvUjuu0dZyOODYmRYAAYyrLwm8C3lJNkEZCuUwvLwghP%2FI0xWTJbOL8xqnF%2F6oEbsXxJAvSD6hPkZDoZyZZPLcYnvg9BAeS\"}]}"
+                }
+              },
+              "Server": {
+                "schema": { "type": "string", "example": "cloudflare" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Cloud-Trace-Context": {
+                "schema": {
+                  "type": "string",
+                  "example": "6e544d066e649407d4118ac0bf839510;o=1"
+                }
+              },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              },
+              "alt-svc": {
+                "schema": {
+                  "type": "string",
+                  "example": "h3=\":443\"; ma=86400"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid token"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "401 - Invalid token": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "c4971b49-7ce5-42d4-9045-311f7f5e2e7e",
+                        "message": "Invalid token"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [{ "bearerAuth": [] }]
+      }
+    },
     "/og": {
       "get": {
         "tags": ["Open Graph Image"],
@@ -632,125 +755,14 @@
         ],
         "responses": { "200": { "description": "" } }
       }
-    },
-    "/": {
-      "get": {
-        "tags": ["Misc"],
-        "summary": "Ping server",
-        "description": "Ping server",
-        "operationId": "pingServer",
-        "responses": {
-          "200": {
-            "description": "200 - Ping server",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "schema": { "type": "string", "example": "true" }
-              },
-              "CF-RAY": {
-                "schema": {
-                  "type": "string",
-                  "example": "95fb6254da23fd63-SIN"
-                }
-              },
-              "Cf-Cache-Status": {
-                "schema": { "type": "string", "example": "DYNAMIC" }
-              },
-              "Connection": {
-                "schema": { "type": "string", "example": "close" }
-              },
-              "Content-Encoding": {
-                "schema": { "type": "string", "example": "br" }
-              },
-              "Date": {
-                "schema": {
-                  "type": "string",
-                  "example": "Tue, 15 Jul 2025 18:39:44 GMT"
-                }
-              },
-              "Etag": {
-                "schema": {
-                  "type": "string",
-                  "example": "W/\"25-xRq02FWva4DiUm8AOw8+nS+TtZ0\""
-                }
-              },
-              "Nel": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}"
-                }
-              },
-              "Report-To": {
-                "schema": {
-                  "type": "string",
-                  "example": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=dyO1qk4RhxgYVPo1aQXXK%2FP%2B%2BZ%2FlidVoHM54o0xB1TgDbS3oPseVv4wH1ORnqkDbQKBHvUAvou5Hgnxm7weEtU8ZvUshYcrOrBPhb8cNBn7E\"}]}"
-                }
-              },
-              "Server": {
-                "schema": { "type": "string", "example": "cloudflare" }
-              },
-              "Transfer-Encoding": {
-                "schema": { "type": "string", "example": "chunked" }
-              },
-              "Vary": { "schema": { "type": "string", "example": "Origin" } },
-              "X-Cloud-Trace-Context": {
-                "schema": {
-                  "type": "string",
-                  "example": "79d5116247f1de1bb370a1e05c08e36d;o=1"
-                }
-              },
-              "X-Powered-By": {
-                "schema": { "type": "string", "example": "Express" }
-              },
-              "alt-svc": {
-                "schema": {
-                  "type": "string",
-                  "example": "h3=\":443\"; ma=86400"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "documentationUrl": {
-                          "type": "string",
-                          "example": "https://api.risalamin.com/docs"
-                        },
-                        "message": {
-                          "type": "string",
-                          "example": "Welcome! The API is up and running"
-                        }
-                      }
-                    }
-                  }
-                },
-                "examples": {
-                  "200 - Ping server": {
-                    "value": {
-                      "data": {
-                        "documentationUrl": "https://api.risalamin.com/docs",
-                        "message": "Welcome! The API is up and running"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "securitySchemes": { "bearerAuth": { "type": "http", "scheme": "bearer" } }
   },
   "tags": [
+    { "name": "General" },
     { "name": "Spotify" },
-    { "name": "Open Graph Image" },
-    { "name": "Misc" }
+    { "name": "Open Graph Image" }
   ]
 }
