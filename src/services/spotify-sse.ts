@@ -23,59 +23,11 @@ export const SSEStates: SSEState = {
   pollingIntervalId: null
 };
 
+const SPOTIFY_POLING_INTERVAL_MS = 1000;
+
 const SSEStatesLogContext: ApiLogContext<SSEState> = {
   context: SSEStates
 };
-
-const SSE_INTERVAL_MS = 1000;
-
-async function pollAndBroadcast(
-  next: NextFunction,
-  SSEClient?: SSEClient
-): Promise<void> {
-  try {
-    await enforceKillSwitch();
-
-    logger.debug(
-      SSEStatesLogContext,
-      'Polling Spotify for currently playing track.'
-    );
-
-    const currentlyPlaying = await SpotifyService.getCurrentlyPlaying();
-
-    const jsonString = JSON.stringify({
-      data: currentlyPlaying
-    });
-
-    const eventString = `data: ${jsonString}\n\n`;
-
-    // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
-    if (SSEClient) {
-      logger.debug('Broadcasting first event to new client.');
-      SSEClient.res.write(eventString);
-    } else {
-      if (!SSEStates.clients.length) {
-        logger.info('No clients connected. Skipping broadcast.');
-        return;
-      }
-
-      logger.debug(
-        `Broadcasting event to ${SSEStates.clients.length} clients.`
-      );
-
-      SSEStates.clients.forEach((client) => client.res.write(eventString));
-    }
-  } catch (err) {
-    if (err instanceof FatalError) next(err);
-
-    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
-
-    logger.error(
-      err,
-      `Error during Spotify poll and broadcast: ${errorMessage}`
-    );
-  }
-}
 
 function handleConnection(
   req: Request,
@@ -111,31 +63,108 @@ function handleConnection(
 
     SSEStates.pollingIntervalId = setInterval(
       () => void pollAndBroadcast(next),
-      SSE_INTERVAL_MS
+      SPOTIFY_POLING_INTERVAL_MS
     );
   }
 
-  res.on('close', () => {
-    SSEStates.clients = SSEStates.clients.filter(
-      (client) => client.id !== SSEClient.id
-    );
+  res.on('close', () => handleClientClose(res, SSEClient));
+}
 
-    logger.info(
+async function pollAndBroadcast(
+  next: NextFunction,
+  SSEClient?: SSEClient
+): Promise<void> {
+  // If there are no more clients connected, stop the polling interval.
+  if (!SSEStates.clients.length && SSEStates.pollingIntervalId) {
+    logger.info('Last client disconnected. Stopping polling interval.');
+
+    clearInterval(SSEStates.pollingIntervalId);
+
+    SSEStates.pollingIntervalId = null;
+  }
+
+  try {
+    await enforceKillSwitch();
+
+    logger.debug(
       SSEStatesLogContext,
-      `Client disconnected: ${SSEClient.id}. Total clients: ${SSEStates.clients.length}`
+      'Polling Spotify for currently playing track.'
     );
 
-    // If there are no more clients connected, stop the polling interval.
-    if (!SSEStates.clients.length && SSEStates.pollingIntervalId) {
-      logger.info('Last client disconnected. Stopping polling interval.');
+    const currentlyPlaying = await SpotifyService.getCurrentlyPlaying();
 
-      clearInterval(SSEStates.pollingIntervalId);
+    const jsonString = JSON.stringify({
+      data: currentlyPlaying
+    });
 
-      SSEStates.pollingIntervalId = null;
+    const spotifyDataString = `event: spotify\ndata: ${jsonString}\n\n`;
+
+    // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
+    if (SSEClient) {
+      logger.debug(
+        SSEStatesLogContext,
+        'Broadcasting first event to new client.'
+      );
+
+      const welcomeDataString = `data: ${JSON.stringify({
+        data: {
+          message: 'Connection established. Waiting for updates...'
+        }
+      })}\n\n`;
+
+      SSEClient.res.write(welcomeDataString);
+      SSEClient.res.write(spotifyDataString);
+
+      return;
     }
 
-    res.end();
-  });
+    logger.debug(
+      SSEStatesLogContext,
+      `Broadcasting event to ${SSEStates.clients.length} clients.`
+    );
+
+    for (const client of SSEStates.clients) {
+      client.res.write(spotifyDataString, (err) => {
+        if (err) {
+          logger.error(
+            err,
+            `Error sending data to client ${client.id}: ${err.message}`
+          );
+
+          handleClientClose(client.res, client);
+
+          return;
+        }
+
+        logger.debug(
+          SSEStatesLogContext,
+          `Successfully sent data to client ${client.id}`
+        );
+      });
+    }
+  } catch (err) {
+    if (err instanceof FatalError) next(err);
+
+    const errorMessage = err instanceof Error ? err.message : 'Unknown error';
+
+    logger.error(
+      err,
+      `Error during Spotify poll and broadcast: ${errorMessage}`
+    );
+  }
+}
+
+function handleClientClose(res: Response, sseClient: SSEClient): void {
+  logger.info(
+    SSEStatesLogContext,
+    `Client disconnected. Total clients: ${SSEStates.clients.length}`
+  );
+
+  SSEStates.clients = SSEStates.clients.filter(
+    (client) => client.id !== sseClient.id
+  );
+
+  res.end();
 }
 
 export const SpotifySSEService = {
