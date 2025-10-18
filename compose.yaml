@@ -1,5 +1,6 @@
 services:
-  app:
+  api:
+    container_name: api
     image: ghcr.io/ccrsxx/api:latest
     ports:
       - '${HOST_PORT:-4000}:4000'
