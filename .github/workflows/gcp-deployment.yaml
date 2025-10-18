@@ -1,0 +1,90 @@
+name: GCP Deployment
+
+# run-name: ${{ github.event_name == 'workflow_dispatch' && format('Manual deploy / {0}', inputs.sha || github.sha) || format('Automatic deploy / {0}', github.event.head_commit.message) }}
+
+on:
+  # push:
+  #   branches:
+  #     - main
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'The commit SHA to deploy'
+        required: false
+
+jobs:
+  ci:
+    uses: ./.github/workflows/ci.yaml
+
+  deploy:
+    name: Build and deploy to Cloud Run
+    runs-on: ubuntu-latest
+    environment: production
+
+    needs: ci
+
+    permissions:
+      id-token: write
+      contents: read
+
+    env:
+      ARTIFACT_REGISTRY: '${{ VARS.REGION }}-docker.pkg.dev'
+      LATEST_DOCKER_IMAGE_TAG: '${{ VARS.REGION }}-docker.pkg.dev/${{ VARS.PROJECT_ID }}/${{ VARS.ARTIFACT_REPO }}/${{ VARS.SERVICE }}:latest'
+      CURRENT_DOCKER_IMAGE_TAG: '${{ VARS.REGION }}-docker.pkg.dev/${{ VARS.PROJECT_ID }}/${{ VARS.ARTIFACT_REPO }}/${{ VARS.SERVICE }}:${{ github.sha }}'
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.sha || github.sha }}
+
+      - id: auth
+        name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}'
+          workload_identity_provider: '${{ secrets.WIF_PROVIDER }}'
+
+      - name: Configure Google Cloud to use specific region for the artifact registry
+        run: gcloud auth configure-docker ${{ env.ARTIFACT_REGISTRY }} -q
+
+      - name: Authenticate to Docker registry
+        uses: docker/login-action@v3
+        with:
+          username: 'oauth2accesstoken'
+          password: '${{ steps.auth.outputs.auth_token }}'
+          registry: '${{ env.ARTIFACT_REGISTRY }}'
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          build-args: |
+            NODE_VERSION=${{ vars.NODE_VERSION }}
+          tags: |
+            ${{ env.LATEST_DOCKER_IMAGE_TAG }}
+            ${{ env.CURRENT_DOCKER_IMAGE_TAG }}
+          cache-from: type=registry,ref=${{ env.LATEST_DOCKER_IMAGE_TAG }}
+          cache-to: type=inline
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          image: '${{ env.CURRENT_DOCKER_IMAGE_TAG }}'
+          region: '${{ vars.REGION }}'
+          service: '${{ vars.SERVICE }}'
+          env_vars: |
+            SECRET_KEY=${{ secrets.SECRET_KEY }}
+            BACKEND_URL=${{ secrets.BACKEND_URL }}
+            VALID_ORIGINS=${{ secrets.VALID_ORIGINS }}
+            SPOTIFY_CLIENT_ID=${{ secrets.SPOTIFY_CLIENT_ID }}
+            CLOUDFLARE_CDN_URL=${{ secrets.CLOUDFLARE_CDN_URL }}
+            CLOUDFLARE_KV_TOKEN=${{ secrets.CLOUDFLARE_KV_TOKEN }}
+            CLOUDFLARE_ACCOUNT_ID=${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+            SPOTIFY_CLIENT_SECRET=${{ secrets.SPOTIFY_CLIENT_SECRET }}
+            SPOTIFY_REFRESH_TOKEN=${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+            CLOUDFLARE_KV_NAMESPACE_ID=${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}
+          env_vars_update_strategy: 'overwrite'
