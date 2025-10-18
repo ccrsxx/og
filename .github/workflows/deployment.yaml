@@ -24,7 +24,6 @@ jobs:
     needs: ci
 
     permissions:
-      contents: read
       packages: write
 
     env:
@@ -59,8 +58,6 @@ jobs:
 
       - name: Create and switch to remote Docker context
         run: |
-          ls -la ~
-          ls -la ~/.ssh
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
