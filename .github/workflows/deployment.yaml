@@ -23,6 +23,10 @@ jobs:
 
     needs: ci
 
+    permissions:
+      contents: read
+      packages: write
+
     env:
       IMAGE: ghcr.io/${{ github.repository }}:${{ github.sha }}
       LATEST_IMAGE: ghcr.io/${{ github.repository }}:latest
