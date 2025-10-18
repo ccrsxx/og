@@ -38,8 +38,8 @@ import { RateLimitRoute } from './routes.ts';
  */
 
 export default (app: Application): void => {
-  // Trust the first two proxies. First is Google Cloud and second is Cloudflare.
-  app.set('trust proxy', 2);
+  // Trust the first proxy in front of the app (Cloudflare)
+  app.set('trust proxy', 1);
 
   app.use(RateLimitRoute.global);
 };
