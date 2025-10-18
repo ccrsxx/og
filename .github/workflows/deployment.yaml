@@ -17,7 +17,7 @@ jobs:
     uses: ./.github/workflows/ci.yaml
 
   deploy:
-    name: Build and deploy via Docker context (SSH)
+    name: Build and deploy via Docker on VPS
     runs-on: ubuntu-latest
     environment: production
 
@@ -56,12 +56,11 @@ jobs:
           cache-from: type=registry,ref=${{ env.LATEST_IMAGE }}
           cache-to: type=inline
 
-      - name: Create and switch to remote Docker context
+      - name: Create SSH Docker context
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          docker context create remote --docker "host=ssh://${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}"
+          echo ${{ secrets.VPS_SSH_KEY }} > ~/.ssh/id_rsa
+          docker context create remote --docker host=ssh://${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}
           docker context use remote
 
       - name: Deploy with Docker Compose
