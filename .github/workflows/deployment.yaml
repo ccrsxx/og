@@ -71,6 +71,7 @@ jobs:
         env:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          IPINFO_TOKEN: ${{ secrets.IPINFO_TOKEN }}
           VALID_ORIGINS: ${{ secrets.VALID_ORIGINS }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           CLOUDFLARE_CDN_URL: ${{ secrets.CLOUDFLARE_CDN_URL }}
@@ -80,4 +81,5 @@ jobs:
           SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
           CLOUDFLARE_KV_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}
         run: |
+          docker compose pull
           docker compose up -d
