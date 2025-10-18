@@ -59,7 +59,7 @@ jobs:
       - name: Create SSH Docker context
         run: |
           mkdir -p ~/.ssh
-          echo ${{ secrets.VPS_SSH_KEY }} > ~/.ssh/id_rsa
+          echo '${{ secrets.VPS_SSH_KEY }}' > ~/.ssh/id_rsa
           docker context create remote --docker host=ssh://${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}
           docker context use remote
 
