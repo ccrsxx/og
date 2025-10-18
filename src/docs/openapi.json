@@ -461,6 +461,325 @@
         "security": [{ "bearerAuth": [] }]
       }
     },
+    "/tools/ip": {
+      "get": {
+        "tags": ["Tools"],
+        "summary": "Get IP info",
+        "description": "Get IP info",
+        "operationId": "getIpInfo",
+        "responses": {
+          "200": {
+            "description": "200 - Get IP info",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "34" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 18 Oct 2025 18:53:33 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"22-Z4Wmsoc38oRdyAg2B/KUclpZzIU\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "99" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "60" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "anycast": { "type": "boolean", "example": true },
+                        "city": { "type": "string", "example": "Brisbane" },
+                        "continent": {
+                          "type": "object",
+                          "properties": {
+                            "code": { "type": "string", "example": "OC" },
+                            "name": { "type": "string", "example": "Oceania" }
+                          }
+                        },
+                        "country": { "type": "string", "example": "Australia" },
+                        "countryCode": { "type": "string", "example": "AU" },
+                        "countryCurrency": {
+                          "type": "object",
+                          "properties": {
+                            "code": { "type": "string", "example": "AUD" },
+                            "symbol": { "type": "string", "example": "$" }
+                          }
+                        },
+                        "countryFlag": {
+                          "type": "object",
+                          "properties": {
+                            "emoji": { "type": "string", "example": "🇦🇺" },
+                            "unicode": {
+                              "type": "string",
+                              "example": "U+1F1E6 U+1F1FA"
+                            }
+                          }
+                        },
+                        "countryFlagURL": {
+                          "type": "string",
+                          "example": "https://cdn.ipinfo.io/static/images/countries-flags/AU.svg"
+                        },
+                        "hostname": {
+                          "type": "string",
+                          "example": "one.one.one.one"
+                        },
+                        "ip": { "type": "string", "example": "1.1.1.1" },
+                        "isEU": { "type": "boolean", "example": false },
+                        "loc": {
+                          "type": "string",
+                          "example": "-27.4816,153.0175"
+                        },
+                        "org": {
+                          "type": "string",
+                          "example": "AS13335 Cloudflare, Inc."
+                        },
+                        "postal": { "type": "string", "example": "4101" },
+                        "region": { "type": "string", "example": "Queensland" },
+                        "timezone": {
+                          "type": "string",
+                          "example": "Australia/Brisbane"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "200 - Get IP info": {
+                    "value": {
+                      "data": {
+                        "anycast": true,
+                        "city": "Brisbane",
+                        "continent": { "code": "OC", "name": "Oceania" },
+                        "country": "Australia",
+                        "countryCode": "AU",
+                        "countryCurrency": { "code": "AUD", "symbol": "$" },
+                        "countryFlag": {
+                          "emoji": "🇦🇺",
+                          "unicode": "U+1F1E6 U+1F1FA"
+                        },
+                        "countryFlagURL": "https://cdn.ipinfo.io/static/images/countries-flags/AU.svg",
+                        "hostname": "one.one.one.one",
+                        "ip": "1.1.1.1",
+                        "isEU": false,
+                        "loc": "-27.4816,153.0175",
+                        "org": "AS13335 Cloudflare, Inc.",
+                        "postal": "4101",
+                        "region": "Queensland",
+                        "timezone": "Australia/Brisbane"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/headers": {
+      "get": {
+        "tags": ["Tools"],
+        "summary": "Get request headers",
+        "description": "Get request headers",
+        "operationId": "getRequestHeaders",
+        "responses": {
+          "200": {
+            "description": "200 - Get request headers",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "205" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 18 Oct 2025 19:23:44 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"cd-SYW1jOKjUY5EXv8b/tI9dwuDhug\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "99" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "60" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "accept": {
+                          "type": "string",
+                          "example": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+                        },
+                        "accept-encoding": {
+                          "type": "string",
+                          "example": "gzip, br"
+                        },
+                        "accept-language": {
+                          "type": "string",
+                          "example": "en-GB"
+                        },
+                        "cdn-loop": {
+                          "type": "string",
+                          "example": "cloudflare; loops=1"
+                        },
+                        "cf-access-jwt-assertion": {
+                          "type": "string",
+                          "example": "x"
+                        },
+                        "cf-connecting-ip": {
+                          "type": "string",
+                          "example": "1.1.1.1"
+                        },
+                        "cf-ipcountry": { "type": "string", "example": "ID" },
+                        "cf-ray": { "type": "string", "example": "x-SIN" },
+                        "cf-visitor": {
+                          "type": "string",
+                          "example": "{\"scheme\":\"https\"}"
+                        },
+                        "cf-warp-tag-id": { "type": "string", "example": "x" },
+                        "connection": {
+                          "type": "string",
+                          "example": "keep-alive"
+                        },
+                        "cookie": { "type": "string", "example": "x" },
+                        "host": {
+                          "type": "string",
+                          "example": "api.risalamin.com"
+                        },
+                        "priority": { "type": "string", "example": "u=0, i" },
+                        "sec-fetch-dest": {
+                          "type": "string",
+                          "example": "document"
+                        },
+                        "sec-fetch-mode": {
+                          "type": "string",
+                          "example": "navigate"
+                        },
+                        "sec-fetch-site": {
+                          "type": "string",
+                          "example": "none"
+                        },
+                        "sec-fetch-user": { "type": "string", "example": "?1" },
+                        "sec-gpc": { "type": "string", "example": "1" },
+                        "upgrade-insecure-requests": {
+                          "type": "string",
+                          "example": "1"
+                        },
+                        "user-agent": {
+                          "type": "string",
+                          "example": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0"
+                        },
+                        "x-forwarded-for": {
+                          "type": "string",
+                          "example": "1.1.1.1"
+                        },
+                        "x-forwarded-proto": {
+                          "type": "string",
+                          "example": "https"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "200 - Get request headers": {
+                    "value": {
+                      "data": {
+                        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                        "accept-encoding": "gzip, br",
+                        "accept-language": "en-GB",
+                        "cdn-loop": "cloudflare; loops=1",
+                        "cf-access-jwt-assertion": "x",
+                        "cf-connecting-ip": "1.1.1.1",
+                        "cf-ipcountry": "ID",
+                        "cf-ray": "x-SIN",
+                        "cf-visitor": "{\"scheme\":\"https\"}",
+                        "cf-warp-tag-id": "x",
+                        "connection": "keep-alive",
+                        "cookie": "x",
+                        "host": "api.risalamin.com",
+                        "priority": "u=0, i",
+                        "sec-fetch-dest": "document",
+                        "sec-fetch-mode": "navigate",
+                        "sec-fetch-site": "none",
+                        "sec-fetch-user": "?1",
+                        "sec-gpc": "1",
+                        "upgrade-insecure-requests": "1",
+                        "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:143.0) Gecko/20100101 Firefox/143.0",
+                        "x-forwarded-for": "1.1.1.1",
+                        "x-forwarded-proto": "https"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/spotify/currently-playing": {
       "get": {
         "tags": ["Spotify"],
@@ -762,6 +1081,7 @@
   },
   "tags": [
     { "name": "General" },
+    { "name": "Tools" },
     { "name": "Spotify" },
     { "name": "Open Graph Image" }
   ]
