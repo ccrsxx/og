@@ -60,8 +60,21 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo '${{ secrets.VPS_SSH_KEY }}' > ~/.ssh/id_ed25519
+          docker context ls
           docker context create remote --docker host=ssh://${{ secrets.VPS_SSH_USER }}@${{ secrets.VPS_SSH_HOST }}
+          docker context use remote
 
       - name: Deploy with Docker Compose
+        env:
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          VALID_ORIGINS: ${{ secrets.VALID_ORIGINS }}
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          CLOUDFLARE_CDN_URL: ${{ secrets.CLOUDFLARE_CDN_URL }}
+          CLOUDFLARE_KV_TOKEN: ${{ secrets.CLOUDFLARE_KV_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
+          CLOUDFLARE_KV_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}
         run: |
           docker compose up -d
