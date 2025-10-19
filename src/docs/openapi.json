@@ -6,13 +6,7 @@
     "version": "1.0.0",
     "contact": {}
   },
-  "servers": [
-    { "url": "https://api.risalamin.com", "description": "Production server" },
-    {
-      "url": "http://localhost:4000",
-      "description": "Local development server"
-    }
-  ],
+  "servers": [{ "url": "{{base_url}}" }],
   "paths": {
     "/": {
       "get": {
@@ -99,7 +93,7 @@
                       "properties": {
                         "documentationUrl": {
                           "type": "string",
-                          "example": "https://api.risalamin.com/docs"
+                          "example": "https://api.ccrsxx.com/docs"
                         },
                         "message": {
                           "type": "string",
@@ -113,7 +107,7 @@
                   "200 - Ping server": {
                     "value": {
                       "data": {
-                        "documentationUrl": "https://api.risalamin.com/docs",
+                        "documentationUrl": "https://api.ccrsxx.com/docs",
                         "message": "Welcome! The API is up and running"
                       }
                     }
@@ -457,19 +451,78 @@
               }
             }
           }
-        },
-        "security": [{ "bearerAuth": [] }]
+        }
       }
     },
     "/tools/ip": {
       "get": {
         "tags": ["Tools"],
-        "summary": "Get IP info",
-        "description": "Get IP info",
-        "operationId": "getIpInfo",
+        "summary": "Get IP Addresss",
+        "description": "Get IP Addresss",
+        "operationId": "getIpAddresss",
         "responses": {
           "200": {
-            "description": "200 - Get IP info",
+            "description": "200 - Get IP Address",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "34" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sat, 18 Oct 2025 18:53:33 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"22-Z4Wmsoc38oRdyAg2B/KUclpZzIU\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "99" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "60" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "text/plain": {
+                "examples": { "200 - Get IP Address": { "value": "1.1.1.1" } }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/ipinfo": {
+      "get": {
+        "tags": ["Tools"],
+        "summary": "Get IP Address info",
+        "description": "Get IP Address info",
+        "operationId": "getIpAddressInfo",
+        "responses": {
+          "200": {
+            "description": "200 - Get IP Address info",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -577,7 +630,7 @@
                   }
                 },
                 "examples": {
-                  "200 - Get IP info": {
+                  "200 - Get IP Address info": {
                     "value": {
                       "data": {
                         "anycast": true,
@@ -706,7 +759,7 @@
                         "cookie": { "type": "string", "example": "x" },
                         "host": {
                           "type": "string",
-                          "example": "api.risalamin.com"
+                          "example": "api.ccrsxx.com"
                         },
                         "priority": { "type": "string", "example": "u=0, i" },
                         "sec-fetch-dest": {
@@ -759,7 +812,7 @@
                         "cf-warp-tag-id": "x",
                         "connection": "keep-alive",
                         "cookie": "x",
-                        "host": "api.risalamin.com",
+                        "host": "api.ccrsxx.com",
                         "priority": "u=0, i",
                         "sec-fetch-dest": "document",
                         "sec-fetch-mode": "navigate",
