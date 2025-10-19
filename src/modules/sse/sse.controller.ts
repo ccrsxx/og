@@ -1,4 +1,4 @@
-import { SSEService } from '../services/sse.ts';
+import { SSEService } from './sse.service.ts';
 import type { NextFunction, Request, Response } from 'express';
 
 function getCurrentlyPlayingSSE(

@@ -1,6 +1,6 @@
 import { Router, type Application } from 'express';
-import { AuthMiddleware } from '../middlewares/auth.ts';
-import { SpotifyController } from '../controllers/spotify.ts';
+import { AuthMiddleware } from '../auth/auth.middleware.ts';
+import { SpotifyController } from './spotify.controller.ts';
 
 export default (app: Application): void => {
   const router = Router();

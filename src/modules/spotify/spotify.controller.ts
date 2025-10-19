@@ -1,8 +1,8 @@
-import { SpotifyService } from '../services/spotify.ts';
-import { SSEService } from '../services/sse.ts';
+import { SSEService } from '../sse/sse.service.ts';
+import { SpotifyService } from './spotify.service.ts';
 import type { NextFunction, Request, Response } from 'express';
-import type { ApiResponse } from '../utils/types/api.ts';
-import type { CurrentlyPlaying } from '../utils/types/spotify.ts';
+import type { ApiResponse } from '../../core/utils/types/api.ts';
+import type { CurrentlyPlaying } from '../../core/utils/types/spotify.ts';
 
 async function getCurrentlyPlaying(
   _req: Request,

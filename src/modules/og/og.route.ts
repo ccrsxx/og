@@ -1,6 +1,6 @@
 import { Router, type Application } from 'express';
-import { OgController } from '../controllers/og.ts';
-import { RateLimitRoute } from '../loaders/rate-limit/routes.ts';
+import { RateLimitRoute } from '../../core/loaders/rate-limit/routes.ts';
+import { OgController } from './og.controller.ts';
 
 export default (app: Application): void => {
   const router = Router();

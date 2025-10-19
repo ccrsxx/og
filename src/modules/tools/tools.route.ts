@@ -1,5 +1,5 @@
 import { Router, type Application } from 'express';
-import { ToolController } from '../controllers/tool.ts';
+import { ToolController } from './tools.controller.ts';
 
 export default (app: Application): void => {
   const router = Router();

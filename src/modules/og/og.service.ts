@@ -2,8 +2,8 @@ import satori from 'satori';
 import { z } from 'zod';
 import { html } from 'satori-html';
 import { Resvg } from '@resvg/resvg-js';
-import { appEnv } from '../utils/env.ts';
-import { validStringSchema } from '../utils/validation.ts';
+import { appEnv } from '../../core/utils/env.ts';
+import { validStringSchema } from '../../core/utils/validation.ts';
 import type { ParsedQs } from 'qs';
 
 const emiliaImageUrl = `${appEnv.CLOUDFLARE_CDN_URL}/assets/emilia.png`;

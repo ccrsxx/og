@@ -1,5 +1,5 @@
-import { OgService } from '../services/og.ts';
-import { appConfig } from '../config/index.ts';
+import { appConfig } from '../../core/config/index.ts';
+import { OgService } from './og.service.ts';
 import type { Request, Response } from 'express';
 
 async function getOg(req: Request, res: Response<Buffer>): Promise<void> {

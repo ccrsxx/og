@@ -1,7 +1,7 @@
-import { logger } from '../loaders/pino.ts';
-import { getIpAddressFromRequest } from '../utils/helper.ts';
-import { SSEStates } from '../services/sse.ts';
-import { HttpError } from '../utils/error.ts';
+import { logger } from '../../core/loaders/pino.ts';
+import { getIpAddressFromRequest } from '../../core/utils/helper.ts';
+import { HttpError } from '../../core/utils/error.ts';
+import { SSEStates } from './sse.service.ts';
 import type { NextFunction, Request, Response } from 'express';
 
 const MAX_GLOBAL_CLIENTS = 100;

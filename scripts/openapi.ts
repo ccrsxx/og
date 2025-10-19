@@ -4,7 +4,7 @@ import { writeFile } from 'fs/promises';
 import { execSync } from 'child_process';
 import { z } from 'zod';
 import { transpile } from 'postman2openapi';
-import { validStringSchema } from '../src/utils/validation.ts';
+import { validStringSchema } from '../src/core/utils/validation.ts';
 import type { OpenAPIV3 } from 'openapi-types';
 
 async function main(): Promise<void> {
@@ -49,7 +49,7 @@ async function main(): Promise<void> {
 
   const stringifiedOpenapi = JSON.stringify(openapi);
 
-  const outputPath = './src/docs/openapi.json';
+  const outputPath = './src/core/docs/openapi.json';
 
   await writeFile(outputPath, stringifiedOpenapi);
 

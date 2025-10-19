@@ -1,8 +1,8 @@
-import { appEnv } from '../utils/env.ts';
-import { logger } from '../loaders/pino.ts';
-import { HttpError } from '../utils/error.ts';
-import { getCachedData } from '../utils/cache.ts';
-import type { CurrentlyPlaying } from '../utils/types/spotify.ts';
+import { appEnv } from '../../core/utils/env.ts';
+import { logger } from '../../core/loaders/pino.ts';
+import { HttpError } from '../../core/utils/error.ts';
+import { getCachedData } from '../../core/utils/cache.ts';
+import type { CurrentlyPlaying } from '../../core/utils/types/spotify.ts';
 
 type AccessToken = {
   scope: string;

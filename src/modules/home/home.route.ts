@@ -1,7 +1,7 @@
 import picomatch from 'picomatch';
 import { Router, type Application } from 'express';
-import { RootController } from '../controllers/root.ts';
-import { ToolController } from '../controllers/tool.ts';
+import { ToolController } from '../tools/tools.controller.ts';
+import { HomeController } from './home.controller.ts';
 
 export default (app: Application): void => {
   const router = Router();
@@ -23,6 +23,6 @@ export default (app: Application): void => {
       return ToolController.getRequestHeader(req, res);
     }
 
-    return RootController.ping(req, res);
+    return HomeController.ping(req, res);
   });
 };

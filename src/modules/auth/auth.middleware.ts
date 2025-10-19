@@ -1,6 +1,6 @@
-import { appEnv } from '../utils/env.ts';
-import { HttpError } from '../utils/error.ts';
-import { AuthService } from '../services/auth.ts';
+import { appEnv } from '../../core/utils/env.ts';
+import { HttpError } from '../../core/utils/error.ts';
+import { AuthService } from './auth.service.ts';
 import type { Request, Response, NextFunction } from 'express';
 
 function isAuthorized(req: Request, _res: Response, next: NextFunction): void {

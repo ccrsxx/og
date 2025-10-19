@@ -1,11 +1,11 @@
 import { randomUUID } from 'crypto';
-import { logger } from '../loaders/pino.ts';
-import { FatalError } from '../utils/error.ts';
-import { enforceKillSwitch } from '../utils/kill-switch.ts';
-import { getIpAddressFromRequest } from '../utils/helper.ts';
-import { SpotifyService } from './spotify.ts';
+import { logger } from '../../core/loaders/pino.ts';
+import { FatalError } from '../../core/utils/error.ts';
+import { enforceKillSwitch } from '../../core/utils/kill-switch.ts';
+import { getIpAddressFromRequest } from '../../core/utils/helper.ts';
+import { SpotifyService } from '../spotify/spotify.service.ts';
 import type { NextFunction, Request, Response } from 'express';
-import type { ApiLogContext } from '../utils/types/log.ts';
+import type { ApiLogContext } from '../../core/utils/types/log.ts';
 
 type SSEClient = {
   id: string;

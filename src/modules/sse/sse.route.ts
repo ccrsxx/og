@@ -1,8 +1,8 @@
 import { type Application } from 'express';
-import { AuthMiddleware } from '../middlewares/auth.ts';
-import { SSEController } from '../controllers/sse.ts';
-import { RateLimitRoute } from '../loaders/rate-limit/routes.ts';
-import { SSEMiddleware } from '../middlewares/sse.ts';
+import { AuthMiddleware } from '../auth/auth.middleware.ts';
+import { RateLimitRoute } from '../../core/loaders/rate-limit/routes.ts';
+import { SSEController } from './sse.controller.ts';
+import { SSEMiddleware } from './sse.middleware.ts';
 
 export default (app: Application): void => {
   app.use(

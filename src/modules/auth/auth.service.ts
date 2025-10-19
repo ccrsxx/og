@@ -1,4 +1,4 @@
-import { HttpError } from '../utils/error.ts';
+import { HttpError } from '../../core/utils/error.ts';
 
 import type { Request } from 'express';
 
