@@ -21,8 +21,14 @@ const sse = createRateLimit({
   max: 10
 });
 
+const ipinfo = createRateLimit({
+  windowMs: TEN_SECONDS_MS,
+  max: 10
+});
+
 export const RateLimitRoute = {
   og,
   sse,
+  ipinfo,
   global
 };

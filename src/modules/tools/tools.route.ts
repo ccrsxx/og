@@ -1,4 +1,5 @@
 import { Router, type Application } from 'express';
+import { RateLimitRoute } from '../../core/loaders/rate-limit/routes.ts';
 import { ToolController } from './tools.controller.ts';
 
 export default (app: Application): void => {
@@ -8,7 +9,7 @@ export default (app: Application): void => {
 
   router.get('/ip', ToolController.getIpAddress);
 
-  router.get('/ipinfo', ToolController.getIpAddressInfo);
+  router.get('/ipinfo', RateLimitRoute.ipinfo, ToolController.getIpAddressInfo);
 
   router.get('/headers', ToolController.getRequestHeader);
 };
