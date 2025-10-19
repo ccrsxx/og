@@ -27,3 +27,8 @@ ENTRYPOINT ["./entrypoint.sh"]
 
 # Expose port for documentation, but this can be overriden if env variable PORT is set
 EXPOSE 4000
+
+# Labels
+LABEL org.opencontainers.image.source="https://github.com/ccrsxx/api"
+LABEL org.opencontainers.image.description="My personal API for my projects"
+LABEL org.opencontainers.image.licenses="GPL-3.0"
