@@ -29,7 +29,8 @@ ENTRYPOINT ["./entrypoint.sh"]
 EXPOSE 4000
 
 # Labels
-LABEL org.opencontainers.image.source "https://github.com/ccrsxx/api"
-LABEL org.opencontainers.image.description "My personal API for my projects"
-LABEL org.opencontainers.image.licenses "GPL-3.0"
+LABEL org.opencontainers.image.authors="ami@ccrsxx.com"
+LABEL org.opencontainers.image.source="https://github.com/ccrsxx/api"
+LABEL org.opencontainers.image.description="My personal API for my projects"
+LABEL org.opencontainers.image.licenses="GPL-3.0"
 
