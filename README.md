@@ -10,12 +10,6 @@ Currently available features/endpoints:
 - Spotify endpoints (currently-playing, top tracks, etc.).
 - Tools endpoints (quick diagnostics for headers, IP info, user-agent parsing, etc.).
 
-## Public API
-
-There is a public deployment available at [https://api.ccrsxx.com](https://api.ccrsxx.com). You can call the same features against that host.
-
-OpenAPI docs are hosted at [https://api.ccrsxx.com/docs](https://api.ccrsxx.com/docs) (served with the Scalar OpenAPI UI).
-
 ## Development
 
 Steps to run the project locally:
