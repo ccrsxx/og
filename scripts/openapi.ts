@@ -11,7 +11,6 @@ async function main(): Promise<void> {
   console.log('Generating OpenAPI documentation...');
 
   const postmanEnvSchema = z.object({
-    BACKEND_URL: validStringSchema,
     POSTMAN_API_KEY: validStringSchema,
     POSTMAN_COLLECTION_ID: validStringSchema
   });
@@ -47,17 +46,6 @@ async function main(): Promise<void> {
   const data = (await postmanCollectionResponse.json()) as PostmanCollection;
 
   const openapi = transpile(data.collection) as OpenAPIV3.Document;
-
-  openapi.servers = [
-    {
-      url: postmanEnv.BACKEND_URL,
-      description: 'Production server'
-    },
-    {
-      url: 'http://localhost:4000',
-      description: 'Local development server'
-    }
-  ];
 
   const stringifiedOpenapi = JSON.stringify(openapi);
 

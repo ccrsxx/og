@@ -1,12 +1,12 @@
-import { appEnv } from '../utils/env.ts';
+import { getPublicUrlFromRequest } from '../utils/helper.ts';
 import type { Request, Response } from 'express';
 import type { ApiResponse } from '../utils/types/api.ts';
 
-function ping(_req: Request, res: Response<ApiResponse>): void {
+function ping(req: Request, res: Response<ApiResponse>): void {
   res.status(200).json({
     data: {
       message: 'Welcome! The API is up and running',
-      documentationUrl: `${appEnv.BACKEND_URL}/docs`
+      documentationUrl: `${getPublicUrlFromRequest(req)}/docs`
     }
   });
 }

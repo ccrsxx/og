@@ -6,5 +6,11 @@ export function getRemainingSecondsFromDate(date: Date): number {
 }
 
 export function getIpAddressFromRequest(req: Request): string {
-  return req.ip ?? 'Unknown IP';
+  return req.ip ?? 'N/A';
+}
+
+export function getPublicUrlFromRequest(req: Request): string {
+  const host = req.get('host');
+  const protocol = req.protocol;
+  return `${protocol}://${host}`;
 }
