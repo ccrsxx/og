@@ -10,7 +10,7 @@
   "paths": {
     "/": {
       "get": {
-        "tags": ["General"],
+        "tags": ["Home"],
         "summary": "Ping server",
         "description": "Ping server",
         "operationId": "pingServer",
@@ -121,7 +121,7 @@
     },
     "/sse": {
       "get": {
-        "tags": ["General"],
+        "tags": ["SSE"],
         "summary": "Get sse events",
         "description": "Get currently playing track on Spotify with Server Sent Events",
         "operationId": "getSseEvents",
@@ -457,12 +457,12 @@
     "/tools/ip": {
       "get": {
         "tags": ["Tools"],
-        "summary": "Get IP Addresss",
-        "description": "Get IP Addresss",
+        "summary": "Get IP addresss",
+        "description": "Get IP addresss",
         "operationId": "getIpAddresss",
         "responses": {
           "200": {
-            "description": "200 - Get IP Address",
+            "description": "200 - Get IP address",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -507,7 +507,7 @@
             },
             "content": {
               "text/plain": {
-                "examples": { "200 - Get IP Address": { "value": "1.1.1.1" } }
+                "examples": { "200 - Get IP address": { "value": "1.1.1.1" } }
               }
             }
           }
@@ -517,12 +517,12 @@
     "/tools/ipinfo": {
       "get": {
         "tags": ["Tools"],
-        "summary": "Get IP Address info",
-        "description": "Get IP Address info",
+        "summary": "Get IP address info",
+        "description": "Get IP address info",
         "operationId": "getIpAddressInfo",
         "responses": {
           "200": {
-            "description": "200 - Get IP Address info",
+            "description": "200 - Get IP address info",
             "headers": {
               "Access-Control-Allow-Credentials": {
                 "schema": { "type": "string", "example": "true" }
@@ -630,7 +630,7 @@
                   }
                 },
                 "examples": {
-                  "200 - Get IP Address info": {
+                  "200 - Get IP address info": {
                     "value": {
                       "data": {
                         "anycast": true,
@@ -652,6 +652,89 @@
                         "postal": "4101",
                         "region": "Queensland",
                         "timezone": "Australia/Brisbane"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "400 - Invalid query",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "schema": { "type": "string", "example": "true" }
+              },
+              "Connection": {
+                "schema": { "type": "string", "example": "keep-alive" }
+              },
+              "Content-Length": {
+                "schema": { "type": "string", "example": "94" }
+              },
+              "Date": {
+                "schema": {
+                  "type": "string",
+                  "example": "Sun, 19 Oct 2025 09:37:50 GMT"
+                }
+              },
+              "ETag": {
+                "schema": {
+                  "type": "string",
+                  "example": "W/\"5e-k2uj15l/CPfj41jZHqCv+h7k9Nw\""
+                }
+              },
+              "Keep-Alive": {
+                "schema": { "type": "string", "example": "timeout=5" }
+              },
+              "RateLimit-Limit": {
+                "schema": { "type": "string", "example": "100" }
+              },
+              "RateLimit-Policy": {
+                "schema": { "type": "string", "example": "100;w=60" }
+              },
+              "RateLimit-Remaining": {
+                "schema": { "type": "string", "example": "98" }
+              },
+              "RateLimit-Reset": {
+                "schema": { "type": "string", "example": "55" }
+              },
+              "Vary": { "schema": { "type": "string", "example": "Origin" } },
+              "X-Powered-By": {
+                "schema": { "type": "string", "example": "Express" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "details": {
+                          "type": "array",
+                          "items": {},
+                          "example": []
+                        },
+                        "id": {
+                          "type": "string",
+                          "example": "6b2612ce-4841-4c21-a02a-6a19231d385a"
+                        },
+                        "message": {
+                          "type": "string",
+                          "example": "Invalid input"
+                        }
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "400 - Invalid query": {
+                    "value": {
+                      "error": {
+                        "details": [],
+                        "id": "6b2612ce-4841-4c21-a02a-6a19231d385a",
+                        "message": "Invalid input"
                       }
                     }
                   }
@@ -1133,7 +1216,8 @@
     "securitySchemes": { "bearerAuth": { "type": "http", "scheme": "bearer" } }
   },
   "tags": [
-    { "name": "General" },
+    { "name": "Home" },
+    { "name": "SSE" },
     { "name": "Tools" },
     { "name": "Spotify" },
     { "name": "Open Graph Image" }
