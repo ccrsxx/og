@@ -1,17 +1,24 @@
 # API
 
-My personal API for my projects and services. This API is built with Node.js and Express.js, and it serves as a backend for various features that I use across my projects.
+Personal API for my projects and services. Built with Node.js and Express. It provides small utility endpoints and integrations used across my projects.
 
 ## Features
 
-Currently, the features include:
+Currently available features/endpoints:
 
-- Open Graph Image Generation: Generates Open Graph images for my projects.
-- Spotify API: Provides access to my Spotify data, like my currently playing track, top tracks, etc.
+- Open Graph image generation (OG images).
+- Spotify endpoints (currently-playing, top tracks, etc.).
+- Tools endpoints (quick diagnostics for headers, IP info, user-agent parsing, etc.).
+
+## Public API
+
+There is a public deployment available at [https://api.ccrsxx.com](https://api.ccrsxx.com). You can call the same features against that host.
+
+OpenAPI docs are hosted at [https://api.ccrsxx.com/docs](https://api.ccrsxx.com/docs) (served with the Scalar OpenAPI UI).
 
 ## Development
 
-Here are the steps to run the project locally:
+Steps to run the project locally:
 
 1. Clone the repository
 
@@ -19,27 +26,27 @@ Here are the steps to run the project locally:
    git clone https://github.com/ccrsxx/api.git
    ```
 
-2. Change directory to the project
+1. Change directory to the project
 
    ```bash
    cd api
    ```
 
-3. Install dependencies
+1. Install dependencies
 
    ```bash
-   npm i
+   npm install
    ```
 
-4. Set up environment variables
+1. Set up environment variables
 
-   Create a copy of the `.env.example` file and name it `.env.local`. Make sure to fill in the credentials correctly.
+   Create a copy of the `.env.example` file and name it `.env.local`. Fill in credentials as needed.
 
    ```bash
-   cp .env.example .env.local
+   copy .env.example .env.local
    ```
 
-5. Run the app
+1. Run the app in development
 
    ```bash
    npm run dev
