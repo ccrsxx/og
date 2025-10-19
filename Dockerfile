@@ -22,13 +22,13 @@ COPY public public
 # Copy the source code
 COPY src src
 
-# Switch to a non-root user for better security
+# Switch to a non-root user
 USER node
 
 # Run the web service on container startup
 ENTRYPOINT ["./entrypoint.sh"]
 
-# Expose port for documentation, but this can be overriden if env variable PORT is set
+# Expose port for documentation, can be overriden if env variable PORT is set
 EXPOSE 4000
 
 # OCI-compliant labels
