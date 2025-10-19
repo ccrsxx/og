@@ -22,15 +22,17 @@ COPY public public
 # Copy the source code
 COPY src src
 
+# Switch to a non-root user for better security
+USER node
+
 # Run the web service on container startup
 ENTRYPOINT ["./entrypoint.sh"]
 
 # Expose port for documentation, but this can be overriden if env variable PORT is set
 EXPOSE 4000
 
-# Labels
-LABEL org.opencontainers.image.authors="ami@ccrsxx.com"
-LABEL org.opencontainers.image.source="https://github.com/ccrsxx/api"
-LABEL org.opencontainers.image.description="My personal API for my projects"
-LABEL org.opencontainers.image.licenses="GPL-3.0"
-
+# OCI-compliant labels
+LABEL org.opencontainers.image.authors="ami@ccrsxx.com" \
+    org.opencontainers.image.source="https://github.com/ccrsxx/api" \
+    org.opencontainers.image.description="My personal API for my projects" \
+    org.opencontainers.image.licenses="GPL-3.0"
