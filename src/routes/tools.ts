@@ -6,7 +6,9 @@ export default (app: Application): void => {
 
   app.use('/tools', router);
 
-  router.get('/ip', ToolController.getIpInfo);
+  router.get('/ip', ToolController.getIpAddress);
+
+  router.get('/ipinfo', ToolController.getIpAddressInfo);
 
   router.get('/headers', ToolController.getRequestHeader);
 };
