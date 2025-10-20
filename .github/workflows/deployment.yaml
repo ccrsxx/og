@@ -16,12 +16,17 @@ jobs:
   ci:
     uses: ./.github/workflows/ci.yaml
 
+  extract-node-version:
+    uses: ./.github/workflows/extract-node-version.yaml
+
   deploy:
     name: Build and deploy via Docker on VPS
     runs-on: ubuntu-latest
     environment: production
 
-    needs: ci
+    needs:
+      - ci
+      - extract-node-version
 
     permissions:
       packages: write
@@ -51,7 +56,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           build-args: |
-            NODE_VERSION=${{ vars.NODE_VERSION }}
+            NODE_VERSION=${{ needs.extract-node-version.outputs.node-version }}
           push: true
           tags: |
             ${{ env.IMAGE }}

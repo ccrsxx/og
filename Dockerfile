@@ -1,5 +1,5 @@
 # Set the node version as a build argument
-ARG NODE_VERSION=24.4.0
+ARG NODE_VERSION
 
 # Use the specified Node.js version as the base image
 FROM node:${NODE_VERSION}-alpine
@@ -8,7 +8,7 @@ FROM node:${NODE_VERSION}-alpine
 WORKDIR /app
 
 # Copy application dependency manifests to the container image
-COPY package*.json .
+COPY package*.json ./
 
 # Install dependencies
 RUN npm ci --omit=dev

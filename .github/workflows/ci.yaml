@@ -7,9 +7,14 @@ on:
       - main
 
 jobs:
+  setup-node-version:
+    uses: ./.github/workflows/extract-node-version.yaml
+
   type-check:
     name: Type check
     runs-on: ubuntu-latest
+
+    needs: setup-node-version
 
     steps:
       - name: Checkout repo
@@ -17,7 +22,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: ${{ needs.setup-node-version.outputs.node-version }}
 
       - name: Download deps
         run: npm ci
@@ -28,13 +33,16 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
+
+    needs: setup-node-version
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: ${{ needs.setup-node-version.outputs.node-version }}
 
       - name: Download deps
         run: npm ci
@@ -45,13 +53,16 @@ jobs:
   prettier:
     name: Prettier
     runs-on: ubuntu-latest
+
+    needs: setup-node-version
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
-          node-version: ${{ vars.NODE_VERSION }}
+          node-version: ${{ needs.setup-node-version.outputs.node-version }}
 
       - name: Download deps
         run: npm ci
