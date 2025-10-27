@@ -9,7 +9,7 @@ on:
 
 jobs:
   extract:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       node-version: ${{ steps.extract.outputs.node-version }}
     steps:

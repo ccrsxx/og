@@ -12,7 +12,7 @@ jobs:
 
   type-check:
     name: Type check
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs: setup-node-version
 
@@ -32,7 +32,7 @@ jobs:
 
   eslint:
     name: ESLint
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs: setup-node-version
 
@@ -52,7 +52,7 @@ jobs:
 
   prettier:
     name: Prettier
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs: setup-node-version
 
