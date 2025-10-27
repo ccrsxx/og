@@ -93,5 +93,5 @@ jobs:
 
       - name: Cleanup Docker context
         run: |
-          docker context rm remote
           docker context use default
+          docker context rm remote
