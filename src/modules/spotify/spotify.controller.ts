@@ -1,6 +1,5 @@
-import { SSEService } from '../sse/sse.service.ts';
 import { SpotifyService } from './spotify.service.ts';
-import type { NextFunction, Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import type { ApiResponse } from '../../core/utils/types/api.ts';
 import type { CurrentlyPlaying } from '../../core/utils/types/currently-playing.ts';
 
@@ -15,15 +14,6 @@ async function getCurrentlyPlaying(
   });
 }
 
-function getCurrentlyPlayingSSE(
-  req: Request,
-  res: Response,
-  next: NextFunction
-): void {
-  SSEService.handleConnection(req, res, next);
-}
-
 export const SpotifyController = {
-  getCurrentlyPlaying,
-  getCurrentlyPlayingSSE
+  getCurrentlyPlaying
 };
