@@ -1172,7 +1172,7 @@
       "get": {
         "tags": ["Jellyfin"],
         "summary": "Get currently playing",
-        "description": "Get currently playing track on Spotify",
+        "description": "Get currently playing track on Jellyfin",
         "operationId": "getCurrentlyPlaying1",
         "responses": {
           "200": {
