@@ -3,6 +3,12 @@ import { logger } from '../../core/loaders/pino.ts';
 import type { CurrentlyPlaying } from '../../core/utils/types/currently-playing.ts';
 import type { SessionInfo } from '../../core/utils/types/jellyfin.ts';
 
+// Cache state to handle transition gaps
+let lastState: CurrentlyPlaying | null = null;
+let lastStateTime = 0;
+
+const GRACE_PERIOD_MS = 3000; // 3 seconds grace period
+
 export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
   const response = await fetch(`${appEnv.JELLYFIN_URL}/Sessions`, {
     headers: {
@@ -39,7 +45,7 @@ export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
   if (!playingSession) {
     logger.info('No currently playing track found on Jellyfin');
 
-    return { platform: 'jellyfin', isPlaying: false, item: null };
+    return getCachedStateOrEmpty();
   }
 
   type PlayingSession = SessionInfo & {
@@ -59,7 +65,6 @@ export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
 
   const albumImageUrl = `${appEnv.JELLYFIN_URL}/Items/${nowPlayingItem.Id}/Images/Primary`;
 
-  // const trackUrl = `${appEnv.JELLYFIN_URL}/web/index.html#!/details?id=${nowPlayingItem.Id}`;
   // Jellyfin does not have a public track URL, user must be logged in to the server to access it
   const trackUrl = null;
 
@@ -72,7 +77,7 @@ export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
     ? Math.floor(playState.PositionTicks / 10000)
     : 0;
 
-  return {
+  const currentState: CurrentlyPlaying = {
     platform: 'jellyfin',
     isPlaying: !playState.IsPaused,
     item: {
@@ -83,6 +88,45 @@ export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
       durationMs,
       progressMs,
       albumImageUrl
+    }
+  };
+
+  // Update cache
+  lastState = currentState;
+  lastStateTime = Date.now();
+
+  return currentState;
+}
+
+function getCachedStateOrEmpty(): CurrentlyPlaying {
+  const shouldUseCache =
+    lastState &&
+    lastState.isPlaying &&
+    Date.now() - lastStateTime < GRACE_PERIOD_MS;
+
+  if (shouldUseCache) {
+    return getExtrapolatedState();
+  }
+
+  return { platform: 'jellyfin', isPlaying: false, item: null };
+}
+
+function getExtrapolatedState(): CurrentlyPlaying {
+  if (!lastState || !lastState.item) {
+    return { platform: 'jellyfin', isPlaying: false, item: null };
+  }
+
+  const elapsed = Date.now() - lastStateTime;
+  const extrapolatedProgress = lastState.item.progressMs + elapsed;
+
+  // Clamp progress to duration
+  const progressMs = Math.min(lastState.item.durationMs, extrapolatedProgress);
+
+  return {
+    ...lastState,
+    item: {
+      ...lastState.item,
+      progressMs
     }
   };
 }
