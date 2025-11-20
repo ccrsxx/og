@@ -85,7 +85,10 @@ jobs:
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
           BACKEND_URL: ${{ secrets.BACKEND_URL }}
           IPINFO_TOKEN: ${{ secrets.IPINFO_TOKEN }}
+          JELLYFIN_URL: ${{ secrets.JELLYFIN_URL }}
           VALID_ORIGINS: ${{ secrets.VALID_ORIGINS }}
+          JELLYFIN_API_KEY: ${{ secrets.JELLYFIN_API_KEY }}
+          JELLYFIN_USERNAME: ${{ secrets.JELLYFIN_USERNAME }}
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           CLOUDFLARE_CDN_URL: ${{ secrets.CLOUDFLARE_CDN_URL }}
           CLOUDFLARE_KV_TOKEN: ${{ secrets.CLOUDFLARE_KV_TOKEN }}

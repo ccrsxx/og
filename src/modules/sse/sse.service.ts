@@ -4,8 +4,10 @@ import { FatalError } from '../../core/utils/error.ts';
 import { enforceKillSwitch } from '../../core/utils/kill-switch.ts';
 import { getIpAddressFromRequest } from '../../core/utils/helper.ts';
 import { SpotifyService } from '../spotify/spotify.service.ts';
+import { JellyfinService } from '../jellyfin/jellyfin.service.ts';
 import type { NextFunction, Request, Response } from 'express';
 import type { ApiLogContext } from '../../core/utils/types/log.ts';
+import type { Platform } from '../../core/utils/types/currently-playing.ts';
 
 type SSEClient = {
   id: string;
@@ -91,13 +93,35 @@ async function pollAndBroadcast(
       'Polling Spotify for currently playing track.'
     );
 
-    const currentlyPlaying = await SpotifyService.getCurrentlyPlaying();
+    const [spotifyCurrentlyPlaying, jellyfinCurrentlyPlaying] =
+      await Promise.all([
+        SpotifyService.getCurrentlyPlaying(),
+        JellyfinService.getCurrentlyPlaying()
+      ]);
 
-    const jsonString = JSON.stringify({
-      data: currentlyPlaying
-    });
+    const spotifyDataString = `event: spotify\ndata: ${JSON.stringify({
+      data: spotifyCurrentlyPlaying
+    })}\n\n`;
 
-    const spotifyDataString = `event: spotify\ndata: ${jsonString}\n\n`;
+    const jellyfinDataString = `event: jellyfin\ndata: ${JSON.stringify({
+      data: jellyfinCurrentlyPlaying
+    })}\n\n`;
+
+    type CurrentlyPlayingItem = {
+      platform: Platform;
+      dataString: string;
+    };
+
+    const currentlyPlayingItems: CurrentlyPlayingItem[] = [
+      {
+        platform: 'spotify',
+        dataString: spotifyDataString
+      },
+      {
+        platform: 'jellyfin',
+        dataString: jellyfinDataString
+      }
+    ];
 
     // If SSEClient is provided, send the event only to that client. Happens when a new client connects.
     if (SSEClient) {
@@ -114,6 +138,7 @@ async function pollAndBroadcast(
 
       SSEClient.res.write(welcomeDataString);
       SSEClient.res.write(spotifyDataString);
+      SSEClient.res.write(jellyfinDataString);
 
       return;
     }
@@ -124,23 +149,30 @@ async function pollAndBroadcast(
     );
 
     for (const client of SSEStates.clients) {
-      client.res.write(spotifyDataString, (err) => {
-        if (err) {
-          logger.error(
-            err,
-            `Error sending data to client ${client.id}: ${err.message}`
+      const handleSendData = ({
+        platform,
+        dataString
+      }: CurrentlyPlayingItem): void => {
+        client.res.write(dataString, (err) => {
+          if (err) {
+            logger.error(
+              err,
+              `Error sending data to client ${client.id} for ${platform}: ${err.message}`
+            );
+
+            handleClientClose(client.res, client);
+
+            return;
+          }
+
+          logger.debug(
+            SSEStatesLogContext,
+            `Successfully sent data to client ${client.id} for ${platform}`
           );
+        });
+      };
 
-          handleClientClose(client.res, client);
-
-          return;
-        }
-
-        logger.debug(
-          SSEStatesLogContext,
-          `Successfully sent data to client ${client.id}`
-        );
-      });
+      currentlyPlayingItems.forEach(handleSendData);
     }
   } catch (err) {
     if (err instanceof FatalError) next(err);
