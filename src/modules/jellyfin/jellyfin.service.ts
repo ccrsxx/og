@@ -7,7 +7,7 @@ import type { SessionInfo } from '../../core/utils/types/jellyfin.ts';
 let lastState: CurrentlyPlaying | null = null;
 let lastStateTime = 0;
 
-const GRACE_PERIOD_MS = 3000; // 3 seconds grace period
+const GRACE_PERIOD_MS = 5000; // 5 seconds grace period
 
 export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
   const response = await fetch(`${appEnv.JELLYFIN_URL}/Sessions`, {
