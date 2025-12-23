@@ -5,7 +5,7 @@ import type { ApiResponse } from '../../core/utils/types/api.ts';
 function ping(req: Request, res: Response<ApiResponse>): void {
   res.status(200).json({
     data: {
-      message: 'Welcome! The API is up and running',
+      message: 'Welcome! The API is up and running. Ping successful.',
       documentationUrl: `${getPublicUrlFromRequest(req)}/docs`
     }
   });
