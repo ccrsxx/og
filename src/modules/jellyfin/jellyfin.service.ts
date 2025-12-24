@@ -63,7 +63,7 @@ export async function getCurrentlyPlaying(): Promise<CurrentlyPlaying> {
   const albumName =
     nowPlayingItem.Album ?? nowPlayingItem.OriginalTitle ?? 'Unknown Album';
 
-  const albumImageUrl = `${appEnv.JELLYFIN_URL}/Items/${nowPlayingItem.Id}/Images/Primary`;
+  const albumImageUrl = `${appEnv.JELLYFIN_IMAGE_URL}/Items/${nowPlayingItem.Id}/Images/Primary`;
 
   // Jellyfin does not have a public track URL, user must be logged in to the server to access it
   const trackUrl = null;

@@ -15,6 +15,7 @@ const envSchema = z.object({
   JELLYFIN_API_KEY: validStringSchema,
   JELLYFIN_USERNAME: validStringSchema,
   SPOTIFY_CLIENT_ID: validStringSchema,
+  JELLYFIN_IMAGE_URL: validStringSchema,
   CLOUDFLARE_CDN_URL: validStringSchema,
   CLOUDFLARE_KV_TOKEN: validStringSchema,
   SPOTIFY_CLIENT_SECRET: validStringSchema,
