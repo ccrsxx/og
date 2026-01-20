@@ -68,9 +68,9 @@ export function createCloudflareKVClient() {
     ttlSeconds?: number
   ): Promise<void> {
     if (ttlSeconds && ttlSeconds < 60) {
-      throw new FatalError(
-        `Cloudflare KV set error for key "${key}" called with ttlSeconds < 60: ${ttlSeconds}. TTL must be at least 60 seconds.`
-      );
+      throw new FatalError({
+        message: `Cloudflare KV set error for key "${key}" called with ttlSeconds < 60: ${ttlSeconds}. TTL must be at least 60 seconds.`
+      });
     }
 
     const formData = new FormData();

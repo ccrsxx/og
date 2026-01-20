@@ -13,8 +13,9 @@ export async function enforceKillSwitch(): Promise<void> {
   });
 
   if (killSwitchEnabled) {
-    throw new FatalError(
-      'Application kill switch is enabled. The application is forced to stop due critical issues.'
-    );
+    throw new FatalError({
+      message:
+        'Application kill switch is enabled. The application is forced to stop due critical issues.'
+    });
   }
 }

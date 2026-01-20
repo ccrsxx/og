@@ -1,6 +1,6 @@
 import { appEnv } from '../../core/utils/env.ts';
 import { logger } from '../../core/loaders/pino.ts';
-import { HttpError } from '../../core/utils/error.ts';
+import { AppError, HttpError } from '../../core/utils/error.ts';
 import { getCachedData } from '../../core/utils/cache.ts';
 import type { CurrentlyPlaying } from '../../core/utils/types/currently-playing.ts';
 
@@ -71,84 +71,91 @@ async function getAccessToken(): Promise<string> {
  * Returns the currently playing song from the Spotify API.
  */
 async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
-  const accessToken = await getAccessToken();
+  try {
+    const accessToken = await getAccessToken();
 
-  const response = await fetch(
-    'https://api.spotify.com/v1/me/player/currently-playing',
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
+    const response = await fetch(
+      'https://api.spotify.com/v1/me/player/currently-playing',
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
       }
-    }
-  );
-
-  if (!response.ok) {
-    logger.error(
-      { status: response.status, statusText: response.statusText },
-      'Error while fetching currently playing track from Spotify'
     );
 
-    return {
-      item: null,
-      platform: 'spotify',
-      isPlaying: false
-    };
-  }
+    if (!response.ok) {
+      logger.error(
+        { status: response.status, statusText: response.statusText },
+        'Error while fetching currently playing track from Spotify'
+      );
 
-  if (response.status === 204) {
-    logger.info('No currently playing track found on Spotify');
-
-    return {
-      item: null,
-      platform: 'spotify',
-      isPlaying: false
-    };
-  }
-
-  const data = (await response.json()) as SpotifyApi.CurrentlyPlayingResponse;
-
-  // TODO: Support episode type in the future
-  const isTrackType = data.item?.type === 'track';
-
-  if (!isTrackType) {
-    return {
-      item: null,
-      platform: 'spotify',
-      isPlaying: false
-    };
-  }
-
-  const item = data.item as SpotifyApi.TrackObjectFull;
-  const isPlaying = data.is_playing;
-
-  const trackName = item.name;
-  const albumName = item.album.name;
-
-  const isLocal = item.is_local;
-
-  const trackUrl = isLocal ? null : item.external_urls.spotify;
-  const albumImageUrl = isLocal ? null : item.album.images[0].url;
-
-  const artistName = item.artists.map(({ name }) => name).join(', ');
-
-  const progressMs = data.progress_ms ?? 0;
-  const durationMs = data.item?.duration_ms ?? 0;
-
-  const currentlyPlaying: CurrentlyPlaying = {
-    platform: 'spotify',
-    isPlaying: isPlaying,
-    item: {
-      trackUrl,
-      trackName,
-      albumName,
-      artistName,
-      progressMs,
-      durationMs,
-      albumImageUrl
+      return {
+        item: null,
+        platform: 'spotify',
+        isPlaying: false
+      };
     }
-  };
 
-  return currentlyPlaying;
+    if (response.status === 204) {
+      logger.info('No currently playing track found on Spotify');
+
+      return {
+        item: null,
+        platform: 'spotify',
+        isPlaying: false
+      };
+    }
+
+    const data = (await response.json()) as SpotifyApi.CurrentlyPlayingResponse;
+
+    // TODO: Support episode type in the future
+    const isTrackType = data.item?.type === 'track';
+
+    if (!isTrackType) {
+      return {
+        item: null,
+        platform: 'spotify',
+        isPlaying: false
+      };
+    }
+
+    const item = data.item as SpotifyApi.TrackObjectFull;
+    const isPlaying = data.is_playing;
+
+    const trackName = item.name;
+    const albumName = item.album.name;
+
+    const isLocal = item.is_local;
+
+    const trackUrl = isLocal ? null : item.external_urls.spotify;
+    const albumImageUrl = isLocal ? null : item.album.images[0].url;
+
+    const artistName = item.artists.map(({ name }) => name).join(', ');
+
+    const progressMs = data.progress_ms ?? 0;
+    const durationMs = data.item?.duration_ms ?? 0;
+
+    const currentlyPlaying: CurrentlyPlaying = {
+      platform: 'spotify',
+      isPlaying: isPlaying,
+      item: {
+        trackUrl,
+        trackName,
+        albumName,
+        artistName,
+        progressMs,
+        durationMs,
+        albumImageUrl
+      }
+    };
+
+    return currentlyPlaying;
+  } catch (err) {
+    throw new AppError({
+      message: 'Failed to get currently playing track from Spotify',
+      cause: err
+    });
+  }
 }
 
 export const SpotifyService = {
