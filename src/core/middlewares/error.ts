@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { HttpError, FatalError } from '../utils/error.ts';
+import { HttpError, FatalError, AppError, errorAs } from '../utils/error.ts';
 import { logger } from '../loaders/pino.ts';
 import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { ApiResponse } from '../utils/types/api.ts';
@@ -51,22 +51,41 @@ function errorHandler(
 
   logger.debug(logContext, 'Error handler invoked');
 
-  if (err instanceof FatalError) {
+  const fatalError = errorAs(err, FatalError);
+
+  if (fatalError) {
     logger.fatal(logContext, `Handled fatal error - ${err.message}`);
 
     process.exit(1);
   }
 
-  if (err instanceof HttpError) {
+  const httpError = errorAs(err, HttpError);
+
+  if (httpError) {
     logger.info(logContext, `Handled expected error - ${err.message}`);
 
-    res.status(err.statusCode).json({
-      error: { id: errorId, message: err.message, details: err.details }
+    res.status(httpError.statusCode).json({
+      error: { id: errorId, message: err.message, details: httpError.details }
     });
 
     return;
   }
 
+  const appError = errorAs(err, AppError);
+
+  if (appError) {
+    logger.warn(logContext, `Handled application error - ${err.message}`);
+
+    res.status(400).json({
+      error: { id: errorId, message: err.message, details: [] }
+    });
+
+    return;
+  }
+
+  // Below this point, we treat the error as an unexpected error
+
+  // Any unhandled error
   if (err instanceof Error) {
     logger.error(logContext, `Handled unexpected error - ${err.message}`);
 
@@ -80,6 +99,8 @@ function errorHandler(
 
     return;
   }
+
+  // Fallback for non-Error throwables (e.g., throw 'string')
 
   logger.error(logContext, 'Handled unknown error');
 

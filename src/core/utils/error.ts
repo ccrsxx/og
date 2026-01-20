@@ -18,8 +18,29 @@ export class HttpError extends Error {
   }
 }
 
+export class AppError extends Error {
+  public constructor(message: string) {
+    super(message);
+  }
+}
+
 export class FatalError extends Error {
   public constructor(message: string) {
     super(message);
   }
+}
+
+export function errorAs<T extends Error>(
+  err: Error,
+  targetErr: new (...args: never[]) => T
+): T | null {
+  let currentErr = err;
+
+  while (currentErr instanceof Error) {
+    if (currentErr instanceof targetErr) return currentErr;
+
+    currentErr = currentErr.cause as Error;
+  }
+
+  return null;
 }
