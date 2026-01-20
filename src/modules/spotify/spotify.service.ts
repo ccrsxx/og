@@ -43,13 +43,8 @@ async function fetchNewAccessToken(): Promise<AccessToken> {
   }
 
   if (!response.ok) {
-    logger.error(
-      { status: response.status, statusText: response.statusText },
-      'Error while fetching Spotify access token'
-    );
-
     throw new HttpError(502, {
-      message: 'Failed to fetch Spotify access token'
+      message: `Failed to fetch Spotify access token: ${response.status} ${response.statusText}`
     });
   }
 
@@ -113,6 +108,7 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
     );
 
     if (!response.ok) {
+      // Log the error but don't throw, as we want to handle it gracefully
       logger.error(
         { status: response.status, statusText: response.statusText },
         'Error while fetching currently playing track from Spotify'
