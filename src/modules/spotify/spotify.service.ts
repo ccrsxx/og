@@ -24,14 +24,23 @@ async function fetchNewAccessToken(): Promise<AccessToken> {
     refresh_token: appEnv.SPOTIFY_REFRESH_TOKEN
   });
 
-  const response = await fetch('https://accounts.spotify.com/api/token', {
-    method: 'POST',
-    headers: {
-      Authorization: `Basic ${token}`,
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: tokenBody
-  });
+  let response: Response;
+
+  try {
+    response = await fetch('https://accounts.spotify.com/api/token', {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: tokenBody
+    });
+  } catch (error) {
+    throw new AppError({
+      message: 'Failed to fetch Spotify access token',
+      cause: error
+    });
+  }
 
   if (!response.ok) {
     logger.error(
@@ -44,7 +53,16 @@ async function fetchNewAccessToken(): Promise<AccessToken> {
     });
   }
 
-  const data = (await response.json()) as AccessToken;
+  let data: AccessToken;
+
+  try {
+    data = (await response.json()) as AccessToken;
+  } catch (err) {
+    throw new AppError({
+      message: 'Spotify returned malformed JSON for access token',
+      cause: err
+    });
+  }
 
   return data;
 }
@@ -57,12 +75,21 @@ async function getAccessToken(): Promise<string> {
   // Add a 60 second buffer to the expiry time to ensure the token is valid when used.
   const bufferExpiryOffset = 60;
 
-  const tokenData = await getCachedData({
-    key: 'api:spotify:access_token',
-    provider: 'memory',
-    fetcher: fetchNewAccessToken,
-    expiryInSeconds: (data) => data.expires_in - bufferExpiryOffset
-  });
+  let tokenData: AccessToken;
+
+  try {
+    tokenData = await getCachedData({
+      key: 'api:spotify:access_token',
+      provider: 'memory',
+      fetcher: fetchNewAccessToken,
+      expiryInSeconds: (data) => data.expires_in - bufferExpiryOffset
+    });
+  } catch (error) {
+    throw new AppError({
+      message: 'Failed to get Spotify access token',
+      cause: error
+    });
+  }
 
   return tokenData.access_token;
 }
@@ -71,10 +98,12 @@ async function getAccessToken(): Promise<string> {
  * Returns the currently playing song from the Spotify API.
  */
 async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
-  try {
-    const accessToken = await getAccessToken();
+  const accessToken = await getAccessToken();
 
-    const response = await fetch(
+  let response: Response;
+
+  try {
+    response = await fetch(
       'https://api.spotify.com/v1/me/player/currently-playing',
       {
         headers: {
@@ -95,67 +124,76 @@ async function getCurrentlyPlaying(): Promise<CurrentlyPlaying | null> {
         isPlaying: false
       };
     }
+  } catch (error) {
+    throw new AppError({
+      message: 'Failed to fetch currently playing track from Spotify',
+      cause: error
+    });
+  }
 
-    if (response.status === 204) {
-      logger.info('No currently playing track found on Spotify');
+  if (response.status === 204) {
+    logger.info('No currently playing track found on Spotify');
 
-      return {
-        item: null,
-        platform: 'spotify',
-        isPlaying: false
-      };
-    }
-
-    const data = (await response.json()) as SpotifyApi.CurrentlyPlayingResponse;
-
-    // TODO: Support episode type in the future
-    const isTrackType = data.item?.type === 'track';
-
-    if (!isTrackType) {
-      return {
-        item: null,
-        platform: 'spotify',
-        isPlaying: false
-      };
-    }
-
-    const item = data.item as SpotifyApi.TrackObjectFull;
-    const isPlaying = data.is_playing;
-
-    const trackName = item.name;
-    const albumName = item.album.name;
-
-    const isLocal = item.is_local;
-
-    const trackUrl = isLocal ? null : item.external_urls.spotify;
-    const albumImageUrl = isLocal ? null : item.album.images[0].url;
-
-    const artistName = item.artists.map(({ name }) => name).join(', ');
-
-    const progressMs = data.progress_ms ?? 0;
-    const durationMs = data.item?.duration_ms ?? 0;
-
-    const currentlyPlaying: CurrentlyPlaying = {
+    return {
+      item: null,
       platform: 'spotify',
-      isPlaying: isPlaying,
-      item: {
-        trackUrl,
-        trackName,
-        albumName,
-        artistName,
-        progressMs,
-        durationMs,
-        albumImageUrl
-      }
+      isPlaying: false
     };
+  }
 
-    return currentlyPlaying;
+  let data: SpotifyApi.CurrentlyPlayingResponse;
+
+  try {
+    data = (await response.json()) as SpotifyApi.CurrentlyPlayingResponse;
   } catch (err) {
     throw new AppError({
-      message: 'Failed to get currently playing track from Spotify',
+      message: 'Spotify returned malformed JSON',
       cause: err
     });
   }
+
+  // TODO: Support episode type in the future
+  const isTrackType = data.item?.type === 'track';
+
+  if (!isTrackType) {
+    return {
+      item: null,
+      platform: 'spotify',
+      isPlaying: false
+    };
+  }
+
+  const item = data.item as SpotifyApi.TrackObjectFull;
+  const isPlaying = data.is_playing;
+
+  const trackName = item.name;
+  const albumName = item.album.name;
+
+  const isLocal = item.is_local;
+
+  const trackUrl = isLocal ? null : item.external_urls.spotify;
+  const albumImageUrl = isLocal ? null : item.album.images[0].url;
+
+  const artistName = item.artists.map(({ name }) => name).join(', ');
+
+  const progressMs = data.progress_ms ?? 0;
+  const durationMs = data.item?.duration_ms ?? 0;
+
+  const currentlyPlaying: CurrentlyPlaying = {
+    platform: 'spotify',
+    isPlaying: isPlaying,
+    item: {
+      trackUrl,
+      trackName,
+      albumName,
+      artistName,
+      progressMs,
+      durationMs,
+      albumImageUrl
+    }
+  };
+
+  return currentlyPlaying;
 }
 
 export const SpotifyService = {
