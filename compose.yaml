@@ -1,10 +1,10 @@
 services:
-  api:
-    container_name: api
-    image: ghcr.io/ccrsxx/api:latest
+  og:
+    container_name: og
+    image: ghcr.io/ccrsxx/og:latest
     restart: unless-stopped
     ports:
-      - '${HOST_PORT:-4000}:4000'
+      - '4444:4000'
     environment:
       - PORT=4000
       - BACKEND_URL=${BACKEND_URL}
