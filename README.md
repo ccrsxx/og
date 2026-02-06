@@ -1,14 +1,11 @@
-# API
+# OG
 
-Personal API for my projects and services. Built with Node.js and Express. It provides small utility endpoints and integrations used across my projects.
+This repository now contains only the Open Graph (OG) image generation service. Other endpoints were migrated to Go — this project focuses solely on generating PNG OG images used across sites and social previews.
 
-## Features
+## What it does
 
-Currently available features/endpoints:
-
-- Open Graph image generation (OG images).
-- Spotify endpoints (currently-playing, top tracks, etc.).
-- Tools endpoints (quick diagnostics for headers, IP info, user-agent parsing, etc.).
+- Exposes a single endpoint: `GET /og` which returns a generated PNG image (image/png).
+- Produces shareable, dynamic OG images using server-side rendering (Satori + Resvg).
 
 ## Development
 
