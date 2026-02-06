@@ -1,6 +1,6 @@
 # OG
 
-This repository now contains only the Open Graph (OG) image generation service. Other endpoints were migrated to Go — this project focuses solely on generating PNG OG images used across sites and social previews.
+This repository now contains only the Open Graph (OG) image generation service. Other endpoints were migrated to Go, this project focuses solely on generating PNG OG images used across sites and social previews.
 
 ## What it does
 
