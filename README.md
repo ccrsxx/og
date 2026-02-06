@@ -14,7 +14,7 @@ Steps to run the project locally:
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/ccrsxx/api.git
+   git clone https://github.com/ccrsxx/og
    ```
 
 1. Change directory to the project
