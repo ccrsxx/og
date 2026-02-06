@@ -70,23 +70,14 @@ jobs:
           cache-from: type=registry,ref=${{ env.LATEST_IMAGE }}
           cache-to: type=inline
 
+      - name: Setup env
+        run: |
+          echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+          echo "BACKEND_URL=${{ secrets.BACKEND_URL }}" >> .env
+          echo "VALID_ORIGINS=${{ secrets.VALID_ORIGINS }}" >> .env
+          echo "CLOUDFLARE_CDN_URL=${{ secrets.CLOUDFLARE_CDN_URL }}" >> .env
+
       - name: Deploy with Docker Compose
-        env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          BACKEND_URL: ${{ secrets.BACKEND_URL }}
-          IPINFO_TOKEN: ${{ secrets.IPINFO_TOKEN }}
-          JELLYFIN_URL: ${{ secrets.JELLYFIN_URL }}
-          VALID_ORIGINS: ${{ secrets.VALID_ORIGINS }}
-          JELLYFIN_API_KEY: ${{ secrets.JELLYFIN_API_KEY }}
-          JELLYFIN_USERNAME: ${{ secrets.JELLYFIN_USERNAME }}
-          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
-          CLOUDFLARE_CDN_URL: ${{ secrets.CLOUDFLARE_CDN_URL }}
-          JELLYFIN_IMAGE_URL: ${{ secrets.JELLYFIN_IMAGE_URL }}
-          CLOUDFLARE_KV_TOKEN: ${{ secrets.CLOUDFLARE_KV_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
-          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
-          CLOUDFLARE_KV_NAMESPACE_ID: ${{ secrets.CLOUDFLARE_KV_NAMESPACE_ID }}
         run: |
           docker compose pull
           docker compose up -d

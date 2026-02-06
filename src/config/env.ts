@@ -9,19 +9,8 @@ const envSchema = z.object({
   PORT: validStringSchema,
   SECRET_KEY: validStringSchema,
   BACKEND_URL: validStringSchema,
-  JELLYFIN_URL: validStringSchema,
-  IPINFO_TOKEN: validStringSchema,
   VALID_ORIGINS: validStringSchema,
-  JELLYFIN_API_KEY: validStringSchema,
-  JELLYFIN_USERNAME: validStringSchema,
-  SPOTIFY_CLIENT_ID: validStringSchema,
-  JELLYFIN_IMAGE_URL: validStringSchema,
-  CLOUDFLARE_CDN_URL: validStringSchema,
-  CLOUDFLARE_KV_TOKEN: validStringSchema,
-  SPOTIFY_CLIENT_SECRET: validStringSchema,
-  SPOTIFY_REFRESH_TOKEN: validStringSchema,
-  CLOUDFLARE_ACCOUNT_ID: validStringSchema,
-  CLOUDFLARE_KV_NAMESPACE_ID: validStringSchema
+  CLOUDFLARE_CDN_URL: validStringSchema
 });
 
 type EnvSchema = z.infer<typeof envSchema>;
