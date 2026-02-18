@@ -1,3 +1,6 @@
+# syntax=docker/dockerfile:1
+# check=skip=InvalidDefaultArgInFrom
+
 # Set the node version as a build argument
 ARG NODE_VERSION
 
