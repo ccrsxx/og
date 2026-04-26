@@ -1,7 +1,7 @@
+import type { NextFunction, Request, Response } from 'express';
 import { appEnv } from '../../config/env.ts';
 import { HttpError } from '../../utils/error.ts';
 import { AuthService } from './auth.service.ts';
-import type { Request, Response, NextFunction } from 'express';
 
 function isAuthorized(req: Request, _res: Response, next: NextFunction): void {
   const token = AuthService.getAuthorizationBearerToken(req);

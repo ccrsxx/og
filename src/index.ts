@@ -1,10 +1,10 @@
-import { createServer } from 'http';
 import express from 'express';
+import { createServer } from 'http';
 import { appEnv } from './config/env.ts';
-import { logger } from './loaders/pino.ts';
 import loaders from './loaders/index.ts';
-import routes from './routes/index.ts';
+import { logger } from './loaders/pino.ts';
 import errorHandler from './middlewares/error.ts';
+import routes from './routes/index.ts';
 
 function main(): void {
   const app = express();

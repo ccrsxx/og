@@ -1,7 +1,7 @@
+import type { Application } from 'express';
 import { pino as Pino, type LoggerOptions } from 'pino';
 import { pinoHttp as PinoHttp, type Options } from 'pino-http';
 import { appConfig } from '../config/config.ts';
-import type { Application } from 'express';
 
 type CombinedLoggerOptions = {
   pinoOptions: LoggerOptions;

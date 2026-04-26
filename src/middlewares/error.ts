@@ -1,10 +1,10 @@
 import { randomUUID } from 'crypto';
-import { HttpError, FatalError, AppError, errorAs } from '../utils/error.ts';
+import type { Application, NextFunction, Request, Response } from 'express';
 import { logger } from '../loaders/pino.ts';
-import { getIpAddressFromRequest } from '../utils/helper.ts';
 import type { ApiResponse } from '../types/api.ts';
-import type { Request, Response, Application, NextFunction } from 'express';
 import type { ApiLogContext } from '../types/log.ts';
+import { AppError, errorAs, FatalError, HttpError } from '../utils/error.ts';
+import { getIpAddressFromRequest } from '../utils/helper.ts';
 
 export default (app: Application): void => {
   app.use(notFoundHandler);

@@ -1,5 +1,5 @@
-import { access } from 'fs/promises';
 import dotenv from 'dotenv';
+import { access } from 'fs/promises';
 import { z } from 'zod';
 import { logger } from '../loaders/pino.ts';
 import { validStringSchema } from '../utils/validation.ts';

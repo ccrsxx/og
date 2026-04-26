@@ -1,6 +1,6 @@
 import cors, { type CorsOptions } from 'cors';
-import { appEnv } from '../config/env.ts';
 import type { Application } from 'express';
+import { appEnv } from '../config/env.ts';
 
 const ALLOWED_ORIGINS = appEnv.VALID_ORIGINS.split(',');
 

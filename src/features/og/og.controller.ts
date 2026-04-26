@@ -1,6 +1,6 @@
+import type { Request, Response } from 'express';
 import { appConfig } from '../../config/config.ts';
 import { OgService } from './og.service.ts';
-import type { Request, Response } from 'express';
 
 async function getOg(req: Request, res: Response<Buffer>): Promise<void> {
   const og = await OgService.getOg(req.query);

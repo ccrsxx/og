@@ -1,6 +1,6 @@
-import { getPublicUrlFromRequest } from '../../utils/helper.ts';
 import type { Request, Response } from 'express';
 import type { ApiResponse } from '../../types/api.ts';
+import { getPublicUrlFromRequest } from '../../utils/helper.ts';
 
 function ping(req: Request, res: Response<ApiResponse>): void {
   res.status(200).json({
