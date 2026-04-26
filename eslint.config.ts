@@ -1,6 +1,6 @@
 import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import importPlugin from 'eslint-plugin-import';
+import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -51,23 +51,6 @@ export default tseslint.config(
       'no-constant-binary-expression': 'error',
 
       // Import plugin rules
-      'import/order': [
-        'warn',
-        {
-          warnOnUnassignedImports: true,
-          pathGroupsExcludedImportTypes: ['type'],
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            'parent',
-            'sibling',
-            'index',
-            'object',
-            'type'
-          ]
-        }
-      ],
       'import/extensions': ['error', 'never', { ts: 'always', json: 'always' }],
       'import/no-duplicates': ['warn', { 'prefer-inline': true }],
 
