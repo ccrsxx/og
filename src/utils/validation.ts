@@ -1,7 +1,5 @@
 import { z, type ZodError } from 'zod';
 
-export const validIpSchema = z.union([z.ipv4(), z.ipv6()]);
-
 export const validStringSchema = z.string().trim().min(1);
 
 export type FormatZodErrorOptions<T extends boolean = false> = {

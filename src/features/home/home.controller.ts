@@ -1,16 +1,13 @@
 import type { Request, Response } from 'express';
 import type { ApiResponse } from '../../types/api.ts';
-import { getPublicUrlFromRequest } from '../../utils/helper.ts';
 
-function ping(req: Request, res: Response<ApiResponse>): void {
-  res.status(200).json({
-    data: {
-      message: 'Welcome! The API is up and running',
-      documentationUrl: `${getPublicUrlFromRequest(req)}/docs`
-    }
-  });
+export class HomeController {
+  ping = (_: Request, res: Response<ApiResponse>): void => {
+    res.status(200).json({
+      data: {
+        message: 'Welcome! The API is up and running',
+        documentationUrl: 'https://api.ccrsxx.com/docs'
+      }
+    });
+  };
 }
-
-export const HomeController = {
-  ping
-};

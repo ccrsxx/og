@@ -1,20 +1,33 @@
 import type { Request, Response } from 'express';
-import { appConfig } from '../../config/config.ts';
-import { OgService } from './og.service.ts';
+import type { ParsedQs } from 'qs';
 
-async function getOg(req: Request, res: Response<Buffer>): Promise<void> {
-  const og = await OgService.getOg(req.query);
+export type OgService = {
+  getOg(query: ParsedQs): Promise<Buffer>;
+};
 
-  if (appConfig.isProduction) {
-    res.set(
-      'Cache-Control',
-      'public, immutable, no-transform, max-age=31536000'
-    );
+export type OgControllerConfig = {
+  isProduction: boolean;
+};
+
+export class OgController {
+  private service: OgService;
+  private config: OgControllerConfig;
+
+  constructor(service: OgService, config: OgControllerConfig) {
+    this.service = service;
+    this.config = config;
   }
 
-  res.contentType('image/png').send(og);
-}
+  getOg = async (req: Request, res: Response<Buffer>): Promise<void> => {
+    const og = await this.service.getOg(req.query);
 
-export const OgController = {
-  getOg
-};
+    if (this.config.isProduction) {
+      res.set(
+        'Cache-Control',
+        'public, immutable, no-transform, max-age=31536000'
+      );
+    }
+
+    res.contentType('image/png').send(og);
+  };
+}

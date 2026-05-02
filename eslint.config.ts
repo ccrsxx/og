@@ -7,7 +7,7 @@ export default tseslint.config(
   // eslint-disable-next-line import/no-named-as-default-member
   tseslint.configs.recommendedTypeChecked,
   {
-    ignores: ['*.mjs']
+    ignores: ['*.mjs', 'coverage']
   },
   {
     files: ['**/*.ts'],
@@ -51,7 +51,14 @@ export default tseslint.config(
       'no-constant-binary-expression': 'error',
 
       // Import plugin rules
-      'import/extensions': ['error', 'never', { ts: 'always', json: 'always' }],
+      'import/extensions': [
+        'error',
+        {
+          ignorePackages: true,
+          checkTypeImports: true,
+          pattern: { ts: 'always' }
+        }
+      ],
       'import/no-duplicates': ['warn', { 'prefer-inline': true }],
 
       // TypeScript plugin rules

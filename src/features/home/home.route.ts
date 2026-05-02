@@ -1,10 +1,15 @@
 import { Router, type Application } from 'express';
-import { HomeController } from './home.controller.ts';
+import type { HomeController } from './home.controller.ts';
 
-export default (app: Application): void => {
+export type HomeRouteConfig = {
+  app: Application;
+  controller: HomeController;
+};
+
+export function loadRoutes(cfg: HomeRouteConfig): void {
   const router = Router();
 
-  app.use('/', router);
+  cfg.app.use('/', router);
 
-  router.get('/', HomeController.ping);
-};
+  router.get('/', cfg.controller.ping);
+}

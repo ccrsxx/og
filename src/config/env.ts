@@ -54,9 +54,9 @@ async function loadEnv(): Promise<void> {
 
     envPath = '.env.local';
 
-    logger.info(`Loading environment variables from ${envPath}`);
+    logger.info(`loading env from ${envPath}`);
   } else {
-    logger.info('Loading environment variables from .env or process.env');
+    logger.info('loading env from .env or process.env');
   }
 
   dotenv.config({ path: envPath, quiet: true });

@@ -3,29 +3,37 @@ import { createServer } from 'http';
 import { appEnv } from './config/env.ts';
 import loaders from './loaders/index.ts';
 import { logger } from './loaders/pino.ts';
-import errorHandler from './middlewares/error.ts';
-import routes from './routes/index.ts';
+import errorHandler from './server/error.ts';
+import { handlers } from './server/handlers.ts';
 
-function main(): void {
+async function main(): Promise<void> {
   const app = express();
   const server = createServer(app);
 
   loaders(app, server);
 
-  routes(app);
+  await handlers(app);
 
   errorHandler(app);
 
   server.listen(appEnv.PORT, () => {
-    logger.info(`Server running on port ${appEnv.PORT}`);
+    logger.info(`server running on port ${appEnv.PORT}`);
   });
 }
 
-/** Listen for termination signal */
+/**
+ * Handle graceful shutdown.
+ * Triggered by process managers (like systemd, PM2) or container orchestrators (like Docker, Cloud Run).
+ */
 process.on('SIGTERM', () => {
-  // Clean up resources on shutdown
-  logger.info('Caught SIGTERM.');
+  logger.info('caught sigterm');
+
+  // Force pending asynchronous logs to write to disk/console before the process dies.
+  // Prevents the loss of critical logs during a restart or crash.
   logger.flush();
 });
 
-main();
+main().catch((err) => {
+  logger.fatal(err, 'server failed to start');
+  process.exit(1);
+});

@@ -49,12 +49,12 @@ function errorHandler(
     }
   };
 
-  logger.debug(logContext, 'Error handler invoked');
+  logger.debug(logContext, 'error handler invoked');
 
   const fatalError = errorAs(err, FatalError);
 
   if (fatalError) {
-    logger.fatal(logContext, `Handled fatal error - ${err.message}`);
+    logger.fatal(logContext, 'fatal error');
 
     process.exit(1);
   }
@@ -62,7 +62,7 @@ function errorHandler(
   const httpError = errorAs(err, HttpError);
 
   if (httpError) {
-    logger.info(logContext, `Handled expected error - ${err.message}`);
+    logger.info(logContext, 'expected error');
 
     res.status(httpError.statusCode).json({
       error: { id: errorId, message: err.message, details: httpError.details }
@@ -74,7 +74,7 @@ function errorHandler(
   const appError = errorAs(err, AppError);
 
   if (appError) {
-    logger.warn(logContext, `Handled application error - ${err.message}`);
+    logger.warn(logContext, 'application error');
 
     res.status(500).json({
       error: { id: errorId, message: err.message, details: [] }
@@ -87,7 +87,7 @@ function errorHandler(
 
   // Any unhandled error
   if (err instanceof Error) {
-    logger.error(logContext, `Handled unexpected error - ${err.message}`);
+    logger.error(logContext, 'unexpected error');
 
     res.status(500).json({
       error: {
@@ -102,7 +102,7 @@ function errorHandler(
 
   // Fallback for non-Error throwables (e.g., throw 'string')
 
-  logger.error(logContext, 'Handled unknown error');
+  logger.error(logContext, 'unknown error');
 
   res.status(500).json({
     error: {
