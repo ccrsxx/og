@@ -63,7 +63,7 @@
     "zod": "^4.0.5"
   },
   "volta": {
-    "node": "24.4.0"
+    "node": "26.2.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
