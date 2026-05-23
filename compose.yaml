@@ -9,6 +9,7 @@ services:
       - .env
     environment:
       - PORT=4000
+      - NODE_ENV=production
     read_only: true
     cap_drop:
       - ALL

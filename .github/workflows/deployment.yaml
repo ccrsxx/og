@@ -63,6 +63,7 @@ jobs:
           platforms: linux/arm64
           build-args: |
             NODE_VERSION=${{ needs.extract-node-version.outputs.node-version }}
+            NODE_DISTROLESS_VERSION=${{ needs.extract-node-version.outputs.node-distroless-version }}
           push: true
           tags: |
             ${{ env.LATEST_IMAGE }}
