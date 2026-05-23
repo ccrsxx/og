@@ -1,14 +1,12 @@
 # syntax=docker/dockerfile:1
 # check=skip=InvalidDefaultArgInFrom
 
-# ---
-
 ARG NODE_VERSION
 ARG NODE_DISTROLESS_VERSION
 
 # ---
 
-FROM node:${NODE_VERSION}-alpine AS build
+FROM node:${NODE_VERSION}-trixie-slim AS build
 
 WORKDIR /app
 
