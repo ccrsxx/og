@@ -1,19 +1,15 @@
 import type { Request, Response } from 'express';
-import type { ParsedQs } from 'qs';
-
-export type OgService = {
-  getOg(query: ParsedQs): Promise<Buffer>;
-};
+import type { IOgService } from './og.service.ts';
 
 export type OgControllerConfig = {
   isProduction: boolean;
 };
 
 export class OgController {
-  private service: OgService;
+  private service: IOgService;
   private config: OgControllerConfig;
 
-  constructor(service: OgService, config: OgControllerConfig) {
+  constructor(service: IOgService, config: OgControllerConfig) {
     this.service = service;
     this.config = config;
   }

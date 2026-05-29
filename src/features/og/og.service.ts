@@ -20,7 +20,11 @@ export type OgServiceConfig = {
   cloudflareCdnUrl: string;
 };
 
-export class OgService {
+export type IOgService = {
+  getOg(query: ParsedQs): Promise<Buffer>;
+};
+
+export class OgService implements IOgService {
   private interMedium: ArrayBuffer;
   private interRegular: ArrayBuffer;
   private interSemibold: ArrayBuffer;

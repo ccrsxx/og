@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import { describe, expect, it, vi } from 'vitest';
-import { OgController, type OgService } from './og.controller.ts';
+import { OgController } from './og.controller.ts';
+import type { IOgService } from './og.service.ts';
 
 describe('OgController', () => {
   describe('getOg', () => {
@@ -8,7 +9,7 @@ describe('OgController', () => {
       const pngBuffer = Buffer.from('fake-png');
 
       // Pure DI — no vi.mock(), no `as any`. IOgService satisfied structurally.
-      const mockService: OgService = {
+      const mockService: IOgService = {
         getOg: vi.fn().mockResolvedValue(pngBuffer)
       };
 
@@ -33,7 +34,7 @@ describe('OgController', () => {
     });
 
     it('sets cache-control header in production mode', async () => {
-      const mockService: OgService = {
+      const mockService: IOgService = {
         getOg: vi.fn().mockResolvedValue(Buffer.from('png'))
       };
 
@@ -57,7 +58,7 @@ describe('OgController', () => {
     });
 
     it('does not set cache-control header in non-production mode', async () => {
-      const mockService: OgService = {
+      const mockService: IOgService = {
         getOg: vi.fn().mockResolvedValue(Buffer.from('png'))
       };
 
