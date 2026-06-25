@@ -1,6 +1,7 @@
 import type { Application } from 'express';
 import { pino as Pino, type LoggerOptions } from 'pino';
 import { pinoHttp as PinoHttp, type Options } from 'pino-http';
+import pretty from 'pino-pretty';
 import { appConfig } from '../config/config.ts';
 
 type CombinedLoggerOptions = {
@@ -9,11 +10,7 @@ type CombinedLoggerOptions = {
 };
 
 const developmentLoggerOptions: CombinedLoggerOptions = {
-  pinoOptions: {
-    transport: {
-      target: 'pino-pretty'
-    }
-  },
+  pinoOptions: {},
   pinoHttpOptions: {
     autoLogging: false
   }
@@ -35,7 +32,9 @@ const { pinoOptions, pinoHttpOptions } = appConfig.isProduction
   ? productionLoggerOptions
   : developmentLoggerOptions;
 
-export const logger = Pino(pinoOptions);
+export const logger = appConfig.isProduction
+  ? Pino(pinoOptions)
+  : Pino(pinoOptions, pretty());
 
 const pinoHttp = PinoHttp({
   ...pinoHttpOptions,
