@@ -1,7 +1,7 @@
 services:
   og:
     container_name: og
-    image: ghcr.io/ccrsxx/og:latest
+    image: ghcr.io/ccrsxx/og:${IMAGE_TAG:-latest}
     restart: unless-stopped
     ports:
       - '4444:4000'
