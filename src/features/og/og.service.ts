@@ -33,7 +33,6 @@ export class OgService implements IOgService {
 
   constructor(cfg: OgServiceConfig) {
     this.emiliaImageUrl = `${cfg.cloudflareCdnUrl}/assets/emilia.png`;
-
     [this.interRegular, this.interMedium, this.interSemibold] = cfg.fonts;
   }
 

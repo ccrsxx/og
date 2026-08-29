@@ -12,8 +12,8 @@ export async function handlers(app: Application): Promise<void> {
   const fonts = await loadFonts(appEnv.CLOUDFLARE_CDN_URL);
 
   const ogService = new OgService({
-    cloudflareCdnUrl: appEnv.CLOUDFLARE_CDN_URL,
-    fonts
+    fonts: fonts,
+    cloudflareCdnUrl: appEnv.CLOUDFLARE_CDN_URL
   });
 
   const ogController = new OgController(ogService, {
