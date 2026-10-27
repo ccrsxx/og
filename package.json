@@ -62,9 +62,6 @@
     "satori-html": "^0.3.2",
     "zod": "^4.0.5"
   },
-  "volta": {
-    "node": "24.22.1"
-  },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   }
